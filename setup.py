@@ -13,9 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/pypa/sampleproject",
     packages=setuptools.find_packages(),
-    setup_requires=['numpy'],
-    install_requires=['xrayutilities',
-                      'matplotlib',
+    install_requires=['matplotlib',
                       'numpy',
                       'scipy'],
     classifiers=[
