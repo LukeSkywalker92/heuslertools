@@ -4,7 +4,7 @@ Python package to help with daily work on heusler materials.
 
 ## Installation
 
-```bash
+``` bash
 pip install git+ssh://git@gitlabep3.physik.uni-wuerzburg.de:2212/lus66ad/heuslertools.git
 ```
 
