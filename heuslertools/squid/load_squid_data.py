@@ -11,6 +11,5 @@ def search_data_start(file, identifier):
 
 def load_squid_data(file):
     data = {}
-    print(file)
     data["field"], data["temperature"], data["long_moment"] = np.loadtxt(fname=file, skiprows=search_data_start(file, "[Data]"), delimiter=",", usecols = (2,3,4), unpack=True)
     return data
