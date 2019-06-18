@@ -1,9 +1,7 @@
 import math
+from .si_constants import MU_BOHR
+from .unit_conversion import emu_to_amps_m2, oersted_to_amps_per_meter, amps_m2_to_emu
 
-MU_BOHR = 9.274009994e-24
-K_B = 1.3806e-23
-MU_ZERO = 1.2566e-6
-g = 2
 
 class Layer(object):
 
@@ -19,13 +17,13 @@ class Layer(object):
         return self.v/self.crystal.v
 
     def emu_to_amp_per_meter(self, emu):
-        return ( emu * 1e-3 ) / self.v
+        return emu_to_amps_m2(emu) / self.v
 
     def amp_per_meter_to_susteptibility(self, amp, field):
         return ( amp * 4 * math.pi ) / field
 
     def ampere_per_meter_to_emu(self, am):
-        return am * self.v * 1e3
+        return amps_m2_to_emu(am) * self.v
 
     def mag_per_unitformula(self, mag):
         return ( mag * self.crystal.v ) / self.crystal.n
@@ -46,4 +44,4 @@ class Layer(object):
         return 4*math.pi/(slope*field*self.v*1e6)
 
     def emu_to_sus(self, emu, field):
-        return (emu * 4 * math.pi)/(field * self.v * 1e6)
+        return emu_to_amps_m2(emu)/(oersted_to_amps_per_meter(field) * self.v)

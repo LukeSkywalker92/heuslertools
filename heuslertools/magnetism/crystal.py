@@ -1,9 +1,5 @@
 import math
-
-MU_BOHR = 9.274009994e-24
-K_B = 1.3806e-23
-MU_ZERO = 1.2566e-6
-g = 2
+from .si_constants import g, K_B, MU_BOHR, MU_ZERO
 
 
 class Crystal(object):
