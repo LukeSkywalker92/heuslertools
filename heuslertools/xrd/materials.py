@@ -1,5 +1,15 @@
 import numpy
 from xrayutilities.materials import (Crystal, CubicAlloy, CubicElasticTensor, SGLattice)
+from xrayutilities.materials.heuslerlib import *
+
+def _check_elements(*elem):
+    ret = []
+    for el in elem:
+        if isinstance(el, str):
+            ret.append(getattr(elements, el))
+        else:
+            ret.append(el)
+    return ret
 
 def HalfHeuslerCubic216(X, Y, Z, a, biso=[0, 0, 0], occ=[1, 1, 1], cij=None):
     """

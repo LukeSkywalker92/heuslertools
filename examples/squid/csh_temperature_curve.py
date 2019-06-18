@@ -4,9 +4,9 @@ from heuslertools.magnetism import Layer, Crystal
 from heuslertools.squid import load_squid_data, gamma, fit_cw
 from heuslertools.squid.csh import calculate_beta, interpolate_measurement, calculate_compensated_moment
 
-FILEPATH_SAMPLE = '/home/luke/system01/heusler/Samples/H1258/SQUID/H1258_CSH_HipII110_[L]_45,7mg_+b13,7mg_m(T,5kOe,FC)_300K_to_4K_12062019.rso.dat'
-FILEPATH_GAP = '/home/luke/system01/heusler/Lab/SQUID/CSH_InAs_1/Gap/Gap_CSH_-61.6mg_m(T,5kOe,FC)_300K_to_4K_07062019.rso.dat'
-FILEPATH_REFERENCE = '/home/luke/system01/heusler/Lab/SQUID/CSH_InAs_1/Reference/Reference_C21_1_1906_HipII110_[L]_CSH_50,0mg_+b13,7mg_m(T,5kOe,FC)_300K_to_4K_14062019.rso.dat'
+FILEPATH_SAMPLE = 'data/H1258_CSH_HipII110_[L]_45,7mg_+b13,7mg_m(T,5kOe,FC)_300K_to_4K_12062019.rso.dat'
+FILEPATH_GAP = 'data/Gap_CSH_-61.6mg_m(T,5kOe,FC)_300K_to_4K_07062019.rso.dat'
+FILEPATH_REFERENCE = 'data/Reference_C21_1_1906_HipII110_[L]_CSH_50,0mg_+b13,7mg_m(T,5kOe,FC)_300K_to_4K_14062019.rso.dat'
 SAVE_PATH = ''
 X = "temperature"
 Y = "long_moment"
