@@ -16,7 +16,7 @@ def emu_per_cm3_to_amps_per_meter(emu_per_cm3):
     return emu_per_cm3*1e3
 
 def amps_per_meter_to_emu_per_cm3(amps_per_meter):
-    return amps_per_meter*13-3
+    return amps_per_meter*1e-3
 
 def emu_to_amps_m2(emu):
     return emu*1e-3
