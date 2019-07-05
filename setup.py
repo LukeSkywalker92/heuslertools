@@ -15,7 +15,8 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=['matplotlib',
                       'numpy',
-                      'scipy'],
+                      'scipy'
+                      'periodictable'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
