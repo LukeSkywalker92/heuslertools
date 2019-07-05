@@ -33,6 +33,6 @@ before_script:
 deploy:
   stage: deploy
   script:
-    - pip3 install pdoc
+    - pip3 install pdoc3
     - pdoc --html heuslertools --template-dir doc/templates
     - scp html/heuslertools/* gitlab@system02.physik.uni-wuerzburg.de:/var/www/cdnep3/heuslertools/
