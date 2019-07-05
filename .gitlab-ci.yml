@@ -34,6 +34,6 @@ deploy:
   stage: deploy
   script:
     - pip3 install pdoc3
-    - python setup.py install
+    - python3 setup.py install
     - pdoc --html heuslertools --template-dir doc/templates
     - scp html/heuslertools/* gitlab@system02.physik.uni-wuerzburg.de:/var/www/cdnep3/heuslertools/
