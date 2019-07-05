@@ -35,5 +35,6 @@ deploy:
   script:
     - pip3.7 install pdoc3
     - python3.7 setup.py install
+    - pip3.7 install xrayutilities
     - pdoc --html heuslertools --template-dir doc/templates
     - scp html/heuslertools/* gitlab@system02.physik.uni-wuerzburg.de:/var/www/cdnep3/heuslertools/
