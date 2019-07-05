@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.6.3" />
+<title>heuslertools.magnetism.layer API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase;cursor:pointer}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_CHTML'></script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>heuslertools.magnetism.layer</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">import math
+from .si_constants import MU_BOHR
+from .unit_conversion import emu_to_amps_m2, oersted_to_amps_per_meter, amps_m2_to_emu
+
+
+class Layer(object):
+
+    def __init__(self, l, w, h, crystal):
+        &#34;&#34;&#34;
+        The layer class allows you to generate a layer object that allows you
+        to perform magnetic unit conversations in context to the layer.
+        You can import it with
+
+        ```from heuslertools.magnetism import Layer```
+        &#34;&#34;&#34;
+        self.l = l
+        &#34;&#34;&#34;Lenght of the layer in meters&#34;&#34;&#34;
+        self.w = w
+        &#34;&#34;&#34;Width of the layer in meters&#34;&#34;&#34;
+        self.h = h
+        &#34;&#34;&#34;Height of the layer in meters&#34;&#34;&#34;
+        self.crystal = crystal
+        &#34;&#34;&#34;`heuslertools.magnetism.crystal.Crystal` object that the layer is made off&#34;&#34;&#34;
+        self.v = self.l*self.w*self.h
+        &#34;&#34;&#34;Volume of the layer in \(m^{3}\)&#34;&#34;&#34;
+        print(&#34;Created Layer with&#34;, &#34;l =&#34;, self.l, &#34;, w =&#34;, self.w, &#34;, h =&#34;, self.h, &#34;, v =&#34;, self.v)
+
+    def get_unit_cells_in_layer(self):
+        &#34;&#34;&#34;Get the number of unit cells in the layer&#34;&#34;&#34;
+        return self.v/self.crystal.v
+
+    def emu_to_amp_per_meter(self, emu):
+        &#34;&#34;&#34;Convert \(emu\) to \(\\frac{A}{m}\)&#34;&#34;&#34;
+        return emu_to_amps_m2(emu) / self.v
+
+    def amp_per_meter_to_susteptibility(self, amp, field):
+        &#34;&#34;&#34;Convert \(\\frac{A}{m}\) to suszeptibility&#34;&#34;&#34;
+        return ( amp * 4 * math.pi ) / field
+
+    def ampere_per_meter_to_emu(self, am):
+        &#34;&#34;&#34;Convert \(\\frac{A}{m}\) to \(emu\)&#34;&#34;&#34;
+        return amps_m2_to_emu(am) * self.v
+
+    def mag_per_unitformula(self, mag):
+        &#34;&#34;&#34;Normalize magnetization to magnetization per unit formula&#34;&#34;&#34;
+        return ( mag * self.crystal.v ) / self.crystal.n
+
+    def total_mag(self, mpuf):
+        &#34;&#34;&#34;Get total magnetization from magnetization per unit formula&#34;&#34;&#34;
+        return ( mpuf * self.crystal.n ) / self.crystal.v
+
+    def emu_to_mubohr_per_unitformula(self, emu):
+        &#34;&#34;&#34;Convert \(emu\) to \(\\frac{µ_{B}}{u.f.}\)&#34;&#34;&#34;
+        return self.mag_per_unitformula(self.emu_to_amp_per_meter(emu)) / MU_BOHR
+
+    def mubohr_per_unitformula_to_emu(self, mubohr):
+        &#34;&#34;&#34;Convert \(\\frac{µ_{B}}{u.f.}\) to \(emu\)&#34;&#34;&#34;
+        return self.ampere_per_meter_to_emu(self.total_mag(mubohr * MU_BOHR))
+
+    def pm_moment(self, temperature, field):
+        &#34;&#34;&#34;Calculate paramagnetic moment for given temperature [K] and field [Oe]&#34;&#34;&#34;
+        return (self.crystal.pm_suszeptibility(temperature)*field*self.v*1e6)/(4*math.pi)
+
+    def slope_to_c(self, slope, field):
+        &#34;&#34;&#34;Calculate Curie Weiss constant from field [Oe] and slope of inverse suszeptibility&#34;&#34;&#34;
+        return 4*math.pi/(slope*field*self.v*1e6)
+
+    def emu_to_sus(self, emu, field):
+        &#34;&#34;&#34;Convert \(emu\) with given field [Oe] to suszeptibility&#34;&#34;&#34;
+        return emu_to_amps_m2(emu)/(oersted_to_amps_per_meter(field) * self.v)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="heuslertools.magnetism.layer.Layer"><code class="flex name class">
+<span>class <span class="ident">Layer</span></span>
+<span>(</span><span>l, w, h, crystal)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>The layer class allows you to generate a layer object that allows you
+to perform magnetic unit conversations in context to the layer.
+You can import it with</p>
+<p><code>from heuslertools.magnetism import Layer</code></p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">class Layer(object):
+
+    def __init__(self, l, w, h, crystal):
+        &#34;&#34;&#34;
+        The layer class allows you to generate a layer object that allows you
+        to perform magnetic unit conversations in context to the layer.
+        You can import it with
+
+        ```from heuslertools.magnetism import Layer```
+        &#34;&#34;&#34;
+        self.l = l
+        &#34;&#34;&#34;Lenght of the layer in meters&#34;&#34;&#34;
+        self.w = w
+        &#34;&#34;&#34;Width of the layer in meters&#34;&#34;&#34;
+        self.h = h
+        &#34;&#34;&#34;Height of the layer in meters&#34;&#34;&#34;
+        self.crystal = crystal
+        &#34;&#34;&#34;`heuslertools.magnetism.crystal.Crystal` object that the layer is made off&#34;&#34;&#34;
+        self.v = self.l*self.w*self.h
+        &#34;&#34;&#34;Volume of the layer in \(m^{3}\)&#34;&#34;&#34;
+        print(&#34;Created Layer with&#34;, &#34;l =&#34;, self.l, &#34;, w =&#34;, self.w, &#34;, h =&#34;, self.h, &#34;, v =&#34;, self.v)
+
+    def get_unit_cells_in_layer(self):
+        &#34;&#34;&#34;Get the number of unit cells in the layer&#34;&#34;&#34;
+        return self.v/self.crystal.v
+
+    def emu_to_amp_per_meter(self, emu):
+        &#34;&#34;&#34;Convert \(emu\) to \(\\frac{A}{m}\)&#34;&#34;&#34;
+        return emu_to_amps_m2(emu) / self.v
+
+    def amp_per_meter_to_susteptibility(self, amp, field):
+        &#34;&#34;&#34;Convert \(\\frac{A}{m}\) to suszeptibility&#34;&#34;&#34;
+        return ( amp * 4 * math.pi ) / field
+
+    def ampere_per_meter_to_emu(self, am):
+        &#34;&#34;&#34;Convert \(\\frac{A}{m}\) to \(emu\)&#34;&#34;&#34;
+        return amps_m2_to_emu(am) * self.v
+
+    def mag_per_unitformula(self, mag):
+        &#34;&#34;&#34;Normalize magnetization to magnetization per unit formula&#34;&#34;&#34;
+        return ( mag * self.crystal.v ) / self.crystal.n
+
+    def total_mag(self, mpuf):
+        &#34;&#34;&#34;Get total magnetization from magnetization per unit formula&#34;&#34;&#34;
+        return ( mpuf * self.crystal.n ) / self.crystal.v
+
+    def emu_to_mubohr_per_unitformula(self, emu):
+        &#34;&#34;&#34;Convert \(emu\) to \(\\frac{µ_{B}}{u.f.}\)&#34;&#34;&#34;
+        return self.mag_per_unitformula(self.emu_to_amp_per_meter(emu)) / MU_BOHR
+
+    def mubohr_per_unitformula_to_emu(self, mubohr):
+        &#34;&#34;&#34;Convert \(\\frac{µ_{B}}{u.f.}\) to \(emu\)&#34;&#34;&#34;
+        return self.ampere_per_meter_to_emu(self.total_mag(mubohr * MU_BOHR))
+
+    def pm_moment(self, temperature, field):
+        &#34;&#34;&#34;Calculate paramagnetic moment for given temperature [K] and field [Oe]&#34;&#34;&#34;
+        return (self.crystal.pm_suszeptibility(temperature)*field*self.v*1e6)/(4*math.pi)
+
+    def slope_to_c(self, slope, field):
+        &#34;&#34;&#34;Calculate Curie Weiss constant from field [Oe] and slope of inverse suszeptibility&#34;&#34;&#34;
+        return 4*math.pi/(slope*field*self.v*1e6)
+
+    def emu_to_sus(self, emu, field):
+        &#34;&#34;&#34;Convert \(emu\) with given field [Oe] to suszeptibility&#34;&#34;&#34;
+        return emu_to_amps_m2(emu)/(oersted_to_amps_per_meter(field) * self.v)</code></pre>
+</details>
+<h3>Instance variables</h3>
+<dl>
+<dt id="heuslertools.magnetism.layer.Layer.crystal"><code class="name">var <span class="ident">crystal</span></code></dt>
+<dd>
+<section class="desc"><p><a title="heuslertools.magnetism.crystal.Crystal" href="crystal.html#heuslertools.magnetism.crystal.Crystal"><code>Crystal</code></a> object that the layer is made off</p></section>
+</dd>
+<dt id="heuslertools.magnetism.layer.Layer.h"><code class="name">var <span class="ident">h</span></code></dt>
+<dd>
+<section class="desc"><p>Height of the layer in meters</p></section>
+</dd>
+<dt id="heuslertools.magnetism.layer.Layer.l"><code class="name">var <span class="ident">l</span></code></dt>
+<dd>
+<section class="desc"><p>Lenght of the layer in meters</p></section>
+</dd>
+<dt id="heuslertools.magnetism.layer.Layer.v"><code class="name">var <span class="ident">v</span></code></dt>
+<dd>
+<section class="desc"><p>Volume of the layer in <span><span class="MathJax_Preview">m^{3}</span><script type="math/tex">m^{3}</script></span></p></section>
+</dd>
+<dt id="heuslertools.magnetism.layer.Layer.w"><code class="name">var <span class="ident">w</span></code></dt>
+<dd>
+<section class="desc"><p>Width of the layer in meters</p></section>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="heuslertools.magnetism.layer.Layer.amp_per_meter_to_susteptibility"><code class="name flex">
+<span>def <span class="ident">amp_per_meter_to_susteptibility</span></span>(<span>self, amp, field)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Convert <span><span class="MathJax_Preview">\frac{A}{m}</span><script type="math/tex">\frac{A}{m}</script></span> to suszeptibility</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def amp_per_meter_to_susteptibility(self, amp, field):
+    &#34;&#34;&#34;Convert \(\\frac{A}{m}\) to suszeptibility&#34;&#34;&#34;
+    return ( amp * 4 * math.pi ) / field</code></pre>
+</details>
+</dd>
+<dt id="heuslertools.magnetism.layer.Layer.ampere_per_meter_to_emu"><code class="name flex">
+<span>def <span class="ident">ampere_per_meter_to_emu</span></span>(<span>self, am)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Convert <span><span class="MathJax_Preview">\frac{A}{m}</span><script type="math/tex">\frac{A}{m}</script></span> to <span><span class="MathJax_Preview">emu</span><script type="math/tex">emu</script></span></p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def ampere_per_meter_to_emu(self, am):
+    &#34;&#34;&#34;Convert \(\\frac{A}{m}\) to \(emu\)&#34;&#34;&#34;
+    return amps_m2_to_emu(am) * self.v</code></pre>
+</details>
+</dd>
+<dt id="heuslertools.magnetism.layer.Layer.emu_to_amp_per_meter"><code class="name flex">
+<span>def <span class="ident">emu_to_amp_per_meter</span></span>(<span>self, emu)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Convert <span><span class="MathJax_Preview">emu</span><script type="math/tex">emu</script></span> to <span><span class="MathJax_Preview">\frac{A}{m}</span><script type="math/tex">\frac{A}{m}</script></span></p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def emu_to_amp_per_meter(self, emu):
+    &#34;&#34;&#34;Convert \(emu\) to \(\\frac{A}{m}\)&#34;&#34;&#34;
+    return emu_to_amps_m2(emu) / self.v</code></pre>
+</details>
+</dd>
+<dt id="heuslertools.magnetism.layer.Layer.emu_to_mubohr_per_unitformula"><code class="name flex">
+<span>def <span class="ident">emu_to_mubohr_per_unitformula</span></span>(<span>self, emu)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Convert <span><span class="MathJax_Preview">emu</span><script type="math/tex">emu</script></span> to <span><span class="MathJax_Preview">\frac{µ_{B}}{u.f.}</span><script type="math/tex">\frac{µ_{B}}{u.f.}</script></span></p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def emu_to_mubohr_per_unitformula(self, emu):
+    &#34;&#34;&#34;Convert \(emu\) to \(\\frac{µ_{B}}{u.f.}\)&#34;&#34;&#34;
+    return self.mag_per_unitformula(self.emu_to_amp_per_meter(emu)) / MU_BOHR</code></pre>
+</details>
+</dd>
+<dt id="heuslertools.magnetism.layer.Layer.emu_to_sus"><code class="name flex">
+<span>def <span class="ident">emu_to_sus</span></span>(<span>self, emu, field)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Convert <span><span class="MathJax_Preview">emu</span><script type="math/tex">emu</script></span> with given field [Oe] to suszeptibility</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def emu_to_sus(self, emu, field):
+    &#34;&#34;&#34;Convert \(emu\) with given field [Oe] to suszeptibility&#34;&#34;&#34;
+    return emu_to_amps_m2(emu)/(oersted_to_amps_per_meter(field) * self.v)</code></pre>
+</details>
+</dd>
+<dt id="heuslertools.magnetism.layer.Layer.get_unit_cells_in_layer"><code class="name flex">
+<span>def <span class="ident">get_unit_cells_in_layer</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Get the number of unit cells in the layer</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def get_unit_cells_in_layer(self):
+    &#34;&#34;&#34;Get the number of unit cells in the layer&#34;&#34;&#34;
+    return self.v/self.crystal.v</code></pre>
+</details>
+</dd>
+<dt id="heuslertools.magnetism.layer.Layer.mag_per_unitformula"><code class="name flex">
+<span>def <span class="ident">mag_per_unitformula</span></span>(<span>self, mag)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Normalize magnetization to magnetization per unit formula</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def mag_per_unitformula(self, mag):
+    &#34;&#34;&#34;Normalize magnetization to magnetization per unit formula&#34;&#34;&#34;
+    return ( mag * self.crystal.v ) / self.crystal.n</code></pre>
+</details>
+</dd>
+<dt id="heuslertools.magnetism.layer.Layer.mubohr_per_unitformula_to_emu"><code class="name flex">
+<span>def <span class="ident">mubohr_per_unitformula_to_emu</span></span>(<span>self, mubohr)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Convert <span><span class="MathJax_Preview">\frac{µ_{B}}{u.f.}</span><script type="math/tex">\frac{µ_{B}}{u.f.}</script></span> to <span><span class="MathJax_Preview">emu</span><script type="math/tex">emu</script></span></p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def mubohr_per_unitformula_to_emu(self, mubohr):
+    &#34;&#34;&#34;Convert \(\\frac{µ_{B}}{u.f.}\) to \(emu\)&#34;&#34;&#34;
+    return self.ampere_per_meter_to_emu(self.total_mag(mubohr * MU_BOHR))</code></pre>
+</details>
+</dd>
+<dt id="heuslertools.magnetism.layer.Layer.pm_moment"><code class="name flex">
+<span>def <span class="ident">pm_moment</span></span>(<span>self, temperature, field)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Calculate paramagnetic moment for given temperature [K] and field [Oe]</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def pm_moment(self, temperature, field):
+    &#34;&#34;&#34;Calculate paramagnetic moment for given temperature [K] and field [Oe]&#34;&#34;&#34;
+    return (self.crystal.pm_suszeptibility(temperature)*field*self.v*1e6)/(4*math.pi)</code></pre>
+</details>
+</dd>
+<dt id="heuslertools.magnetism.layer.Layer.slope_to_c"><code class="name flex">
+<span>def <span class="ident">slope_to_c</span></span>(<span>self, slope, field)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Calculate Curie Weiss constant from field [Oe] and slope of inverse suszeptibility</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def slope_to_c(self, slope, field):
+    &#34;&#34;&#34;Calculate Curie Weiss constant from field [Oe] and slope of inverse suszeptibility&#34;&#34;&#34;
+    return 4*math.pi/(slope*field*self.v*1e6)</code></pre>
+</details>
+</dd>
+<dt id="heuslertools.magnetism.layer.Layer.total_mag"><code class="name flex">
+<span>def <span class="ident">total_mag</span></span>(<span>self, mpuf)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Get total magnetization from magnetization per unit formula</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def total_mag(self, mpuf):
+    &#34;&#34;&#34;Get total magnetization from magnetization per unit formula&#34;&#34;&#34;
+    return ( mpuf * self.crystal.n ) / self.crystal.v</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="heuslertools.magnetism" href="index.html">heuslertools.magnetism</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="heuslertools.magnetism.layer.Layer" href="#heuslertools.magnetism.layer.Layer">Layer</a></code></h4>
+<ul class="">
+<li><code><a title="heuslertools.magnetism.layer.Layer.amp_per_meter_to_susteptibility" href="#heuslertools.magnetism.layer.Layer.amp_per_meter_to_susteptibility">amp_per_meter_to_susteptibility</a></code></li>
+<li><code><a title="heuslertools.magnetism.layer.Layer.ampere_per_meter_to_emu" href="#heuslertools.magnetism.layer.Layer.ampere_per_meter_to_emu">ampere_per_meter_to_emu</a></code></li>
+<li><code><a title="heuslertools.magnetism.layer.Layer.crystal" href="#heuslertools.magnetism.layer.Layer.crystal">crystal</a></code></li>
+<li><code><a title="heuslertools.magnetism.layer.Layer.emu_to_amp_per_meter" href="#heuslertools.magnetism.layer.Layer.emu_to_amp_per_meter">emu_to_amp_per_meter</a></code></li>
+<li><code><a title="heuslertools.magnetism.layer.Layer.emu_to_mubohr_per_unitformula" href="#heuslertools.magnetism.layer.Layer.emu_to_mubohr_per_unitformula">emu_to_mubohr_per_unitformula</a></code></li>
+<li><code><a title="heuslertools.magnetism.layer.Layer.emu_to_sus" href="#heuslertools.magnetism.layer.Layer.emu_to_sus">emu_to_sus</a></code></li>
+<li><code><a title="heuslertools.magnetism.layer.Layer.get_unit_cells_in_layer" href="#heuslertools.magnetism.layer.Layer.get_unit_cells_in_layer">get_unit_cells_in_layer</a></code></li>
+<li><code><a title="heuslertools.magnetism.layer.Layer.h" href="#heuslertools.magnetism.layer.Layer.h">h</a></code></li>
+<li><code><a title="heuslertools.magnetism.layer.Layer.l" href="#heuslertools.magnetism.layer.Layer.l">l</a></code></li>
+<li><code><a title="heuslertools.magnetism.layer.Layer.mag_per_unitformula" href="#heuslertools.magnetism.layer.Layer.mag_per_unitformula">mag_per_unitformula</a></code></li>
+<li><code><a title="heuslertools.magnetism.layer.Layer.mubohr_per_unitformula_to_emu" href="#heuslertools.magnetism.layer.Layer.mubohr_per_unitformula_to_emu">mubohr_per_unitformula_to_emu</a></code></li>
+<li><code><a title="heuslertools.magnetism.layer.Layer.pm_moment" href="#heuslertools.magnetism.layer.Layer.pm_moment">pm_moment</a></code></li>
+<li><code><a title="heuslertools.magnetism.layer.Layer.slope_to_c" href="#heuslertools.magnetism.layer.Layer.slope_to_c">slope_to_c</a></code></li>
+<li><code><a title="heuslertools.magnetism.layer.Layer.total_mag" href="#heuslertools.magnetism.layer.Layer.total_mag">total_mag</a></code></li>
+<li><code><a title="heuslertools.magnetism.layer.Layer.v" href="#heuslertools.magnetism.layer.Layer.v">v</a></code></li>
+<li><code><a title="heuslertools.magnetism.layer.Layer.w" href="#heuslertools.magnetism.layer.Layer.w">w</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.6.3</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
