@@ -5,7 +5,7 @@ before_script:
    ## Install ssh-agent if not already installed, it is required by Docker.
    ## (change apt-get to yum if you use an RPM-based image)
    ##
-  - 'which ssh-agent || ( apt-get update -y && apt-get install python3 python3-pip openssh-client -y )'
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
    ##
    ## Run ssh-agent (inside the build environment)
    ##
@@ -33,7 +33,7 @@ before_script:
 deploy:
   stage: deploy
   script:
-    - pip3 install pdoc3
-    - python3 setup.py install
+    - pip3.7 install pdoc3
+    - python3.7 setup.py install
     - pdoc --html heuslertools --template-dir doc/templates
     - scp html/heuslertools/* gitlab@system02.physik.uni-wuerzburg.de:/var/www/cdnep3/heuslertools/
