@@ -2,7 +2,7 @@
 
 Python package to help with daily work on heusler materials.
 
-The documentation can be found [here](cdnep3.physik.uni-wuerzburg.de/heuslertools).
+The documentation can be found [here](http://cdnep3.physik.uni-wuerzburg.de/heuslertools).
 
 ## Installation
 
