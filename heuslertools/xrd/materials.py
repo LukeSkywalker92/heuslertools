@@ -1,3 +1,6 @@
+"""
+Additional Heusler materials for xrayutilities
+"""
 import numpy
 from xrayutilities.materials import (Crystal, CubicAlloy, CubicElasticTensor, SGLattice)
 from xrayutilities.materials.heuslerlib import *
@@ -38,10 +41,16 @@ def HalfHeuslerCubic216(X, Y, Z, a, biso=[0, 0, 0], occ=[1, 1, 1], cij=None):
 CuMnSb = HalfHeuslerCubic216('Cu', 'Mn', 'Sb', 6.09, cij=CubicElasticTensor(1.056e+11, 8.27e+10, 5.47e+10))
 
 def CuMnSb(occ=[1,1,1]):
+    """
+    Returns a CuMnSb Material
+    """
     return HalfHeuslerCubic216('Cu', 'Mn', 'Sb', 6.09, cij=CubicElasticTensor(1.056e+11, 8.27e+10, 5.47e+10), occ=occ)
 
 class CuMnSb_defect(CubicAlloy):
     def __init__(self, occ=(1, 1, 1), defect_type=None, defec_amount=0):
+        """
+        This is WIP and should not be used at the moment.
+        """
         if defect_type is None:
             CuMnSb_sto = HalfHeuslerCubic216('Cu', 'Mn', 'Sb', 6.09, cij=CubicElasticTensor(1.056e+11, 8.27e+10, 5.47e+10))
             CuMnSb_def = HalfHeuslerCubic216('Cu', 'Mn', 'Sb', 6.09, cij=CubicElasticTensor(1.056e+11, 8.27e+10, 5.47e+10))

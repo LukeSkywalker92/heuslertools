@@ -1,6 +1,13 @@
+"""
+Curie Weiss Fit
+"""
 import numpy as np
 
 def fit_cw(temperatures, suszeptibilities, min, max):
+    """
+    Performs a Curie Weiss fit on temperature dependen suszeptibility
+    measurements and returns the fit parameters.
+    """
     fit_temp_array = np.array([])
     fit_moment_array = np.array([])
     for i in range(0, suszeptibilities.size):

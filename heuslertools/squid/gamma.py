@@ -1,3 +1,6 @@
+"""
+Module for calculation of the gamma factor
+"""
 import numpy as np
 from scipy.interpolate import interp2d
 
@@ -13,4 +16,8 @@ FACTOR_ARRAY = [[0.9995, 0.9953, 0.9887, 0.979561, 0.968, 0.9541],
 f = interp2d(LENGTH_ARRAY, WIDTH_ARRAY, FACTOR_ARRAY, kind='cubic', bounds_error=True)
 
 def gamma(length, width):
+    """
+    Calculates the gamma factor for a given length and width of a sample.
+    The length is always the dimension of the sample along the field direction.
+    """
     return(f(length*1e3, width*1e3)[0])
