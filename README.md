@@ -7,6 +7,13 @@ The documentation can be found [here](http://cdnep3.physik.uni-wuerzburg.de/heus
 ## Installation
 
 ``` bash
+pip install git+https://gitlabep3.physik.uni-wuerzburg.de/lus66ad/heuslertools.git
+```
+
+or if you have added your public ssh key to your gitlab account:
+
+
+``` bash
 pip install git+ssh://git@gitlabep3.physik.uni-wuerzburg.de:2212/lus66ad/heuslertools.git
 ```
 
