@@ -1,5 +1,7 @@
 # Heuslertools
 
+[![pipeline status](https://gitlabep3.physik.uni-wuerzburg.de/lus66ad/heuslertools/badges/master/pipeline.svg)](https://gitlabep3.physik.uni-wuerzburg.de/lus66ad/heuslertools/commits/master)
+
 Python package to help with daily work on heusler materials.
 
 The documentation can be found [here](http://cdnep3.physik.uni-wuerzburg.de/heuslertools).
