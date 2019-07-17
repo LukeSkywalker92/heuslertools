@@ -1,5 +1,7 @@
 import setuptools
 
+HEUSLER_MPL_STYLE = 'heuslertools/plotting/heusler.mplstyle'
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
@@ -22,3 +24,9 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
 )
+
+import matplotlib
+from shutil import copyfile
+import os
+
+copyfile(HEUSLER_MPL_STYLE, os.path.join(matplotlib.get_configdir(),'stylelib', 'heusler.mplstyle'))
