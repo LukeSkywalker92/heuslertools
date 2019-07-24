@@ -18,15 +18,16 @@ setuptools.setup(
     install_requires=['matplotlib',
                       'numpy',
                       'scipy',
-                      'periodictable'],
+                      'periodictable',
+                      'tabulate'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
     ],
 )
 
-import matplotlib
-from shutil import copyfile
-import os
-
-copyfile(HEUSLER_MPL_STYLE, os.path.join(matplotlib.get_configdir(),'stylelib', 'heusler.mplstyle'))
+# import matplotlib
+# from shutil import copyfile
+# import os
+#
+# copyfile(HEUSLER_MPL_STYLE, os.path.join(matplotlib.get_configdir(),'stylelib', 'heusler.mplstyle'))
