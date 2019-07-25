@@ -2,6 +2,7 @@
 Functions to load transport data from measurement files
 """
 import numpy as np
+import matplotlib.pyplot as plt
 from tabulate import tabulate
 from heuslertools.tools.data_handling import search_data_start
 
@@ -19,6 +20,10 @@ def load_transport_data(file, identifier):
 class TransportMeasurement(object):
     """
     Object representing a transport measurement
+
+    You can import it with
+
+    ```from heuslertools.transport import TransportMeasurement```
     """
 
     def __init__(self, file, identifier):
@@ -36,6 +41,18 @@ class TransportMeasurement(object):
         Append data from another file.
         """
         self.data = np.append(self.data, load_transport_data(file, identifier))
+
+    def plot(self, x, y, show=True):
+        """
+        Plot measurement with matplotlib
+        """
+        plt.figure()
+        plt.plot(self.data[x], self.data[y])
+        plt.xlabel(self.names[x]["short_name"] + ' (' + self.names[x]["unit"] + ')')
+        plt.ylabel(self.names[y]["short_name"] + ' (' + self.names[y]["unit"] + ')')
+        if show:
+            plt.show()
+
 
     def print_names(self):
         """

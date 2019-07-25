@@ -34,8 +34,9 @@ Stepvalue##Stepsize##Delaytime (step)
 DCV (Agilent1 34420a Ch1) [V] DCV (Agilent1 34420a Ch2) [V] DCV (Agilent2 34420a Ch1) [V] DCV (Agilent2 34420a Ch2) [V] Temperature (LS332) [K] Temperature (LS332) [Ohm]
   Start Value:   Start Value:   Start Value:   Start Value:   Start Value:   Start Value:
 4.173951E+0 6.948836E-1 2.673046E+0 5.673628E-1 1.422000E+0 3.726800E+3
----------											
+---------
 Time (Computer) [arb. units]	Heater (Lakeshore 332) [% power]	DCV (Agilent1 34420a Ch1) [V]	DCV (Agilent1 34420a Ch2) [V]	DCV (Agilent2 34420a Ch1) [V]	DCV (Agilent2 34420a Ch2) [V]	Temperature (LS332) [K]	Temperature (LS332) [Ohm]	Rxx (Ohm)	G1 (e2/h)	Rxy (Ohm)	R2 (Ohm)
+    
 0.00000E+0	0.00000E+0	4.17380E+0	6.94833E-1	2.67284E+0	5.67302E-1	1.42100E+0	3.72830E+3	1.95608E+1	1.31963E+3	3.00981E+1	8.57629E+2
 1.00000E+0	0.00000E+0	4.17382E+0	6.94873E-1	2.67293E+0	5.67330E-1	1.42100E+0	3.72910E+3	1.95618E+1	1.31956E+3	3.00989E+1	8.57605E+2
 2.00000E+0	0.00000E+0	4.17368E+0	6.94876E-1	2.67293E+0	5.67377E-1	1.42100E+0	3.73070E+3	1.95626E+1	1.31951E+3	3.01000E+1	8.57575E+2
