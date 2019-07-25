@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 from heuslertools.transport import TransportMeasurement
 
 meas = TransportMeasurement('data/RH _7T (02).dat', '---------')
