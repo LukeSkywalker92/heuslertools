@@ -110,7 +110,7 @@ def save_fig(fig, file_name, fmt=None, dpi=300, tight=True):
     elif fmt == 'pdf':
         subprocess.call('pdfcrop %s %s' % (tmp_name, file_name), shell=True)
 
-def set_size(width, fraction=1, ratio=0.618033989):
+def set_size(width, fraction=1, ratio=0.618033989, cm=false, in=false):
     """ Set aesthetic figure dimensions to avoid scaling in latex.
 
     Parameters
@@ -125,17 +125,25 @@ def set_size(width, fraction=1, ratio=0.618033989):
     fig_dim: tuple
             Dimensions of figure in inches
     """
-    # Width of figure
-    fig_width_pt = width * fraction
 
-    # Convert from pt to inches
-    inches_per_pt = 1 / 72.27
+    if cm and in is false:
+        # Width of figure
+        fig_width_pt = width * fraction
+        # Convert from pt to inches
+        inches_per_pt = 1 / 72.27
+        # Figure width in inches
+        fig_width_in = fig_width_pt * inches_per_pt
+
+    if cm:
+        fig_width_in = width/2.54
+
+    if in:
+        fig_width_in = width
 
     # Golden ratio to set aesthetic figure height
     golden_ratio = (5**.5 - 1) / 2
 
-    # Figure width in inches
-    fig_width_in = fig_width_pt * inches_per_pt
+
     # Figure height in inches
     fig_height_in = fig_width_in * ratio
 
