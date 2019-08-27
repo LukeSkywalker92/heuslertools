@@ -110,7 +110,7 @@ def save_fig(fig, file_name, fmt=None, dpi=300, tight=True):
     elif fmt == 'pdf':
         subprocess.call('pdfcrop %s %s' % (tmp_name, file_name), shell=True)
 
-def set_size(width, fraction=1, ratio=0.618033989, cm=false, in=false):
+def set_size(width, fraction=1, ratio=0.618033989, cm=False, in=False):
     """ Set aesthetic figure dimensions to avoid scaling in latex.
 
     Parameters
