@@ -126,7 +126,7 @@ def set_size(width, fraction=1, ratio=0.618033989, cm=False, inch=False):
             Dimensions of figure in inches
     """
 
-    if cm and inch is false:
+    if cm and inch is False:
         # Width of figure
         fig_width_pt = width * fraction
         # Convert from pt to inches
