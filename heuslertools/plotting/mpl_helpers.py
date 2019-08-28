@@ -126,19 +126,17 @@ def set_size(width, fraction=1, ratio=0.618033989, cm=False, inch=False):
             Dimensions of figure in inches
     """
 
-    if cm and inch is False:
+    if cm:
+        fig_width_in = width/2.54
+    elif inch:
+        fig_width_in = width
+    else:
         # Width of figure
         fig_width_pt = width * fraction
         # Convert from pt to inches
         inches_per_pt = 1 / 72.27
         # Figure width in inches
         fig_width_in = fig_width_pt * inches_per_pt
-
-    if cm:
-        fig_width_in = width/2.54
-
-    if inch:
-        fig_width_in = width
 
     # Golden ratio to set aesthetic figure height
     golden_ratio = (5**.5 - 1) / 2
