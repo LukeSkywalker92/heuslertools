@@ -10,10 +10,15 @@ def load_xps_data(file):
 
 class XPSMeasurement(object):
 
-    def __init__(self, file):
+    def __init__(self, file, integration_time=None):
         self.file = file
         self.data = {}
         self.data["E_b"], self.data["CH1"], self.data["CH2"], self.data["CH3"] = load_xps_data(self.file)
+        if integration_time is not None:
+            self.data["CH1"] = self.data["CH1"]/integration_time
+            self.data["CH2"] = self.data["CH2"]/integration_time
+            self.data["CH3"] = self.data["CH3"]/integration_time
+
 
     def append_measurement(self, file):
         new_data = load_xps_data(file)
