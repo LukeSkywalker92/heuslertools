@@ -4,6 +4,7 @@ Additional Heusler materials for xrayutilities
 import numpy
 from xrayutilities.materials import (Crystal, CubicAlloy, CubicElasticTensor, SGLattice)
 from xrayutilities.materials.heuslerlib import *
+from xrayutilities.materials import elements as e
 
 def _check_elements(*elem):
     ret = []
@@ -37,6 +38,11 @@ def HalfHeuslerCubic216(X, Y, Z, a, biso=[0, 0, 0], occ=[1, 1, 1], cij=None):
                              pos=['4a', '4b', '4c'],
                              b=[biso[0], ] + biso,
                              occ=[occ[0], ] + occ), cij)
+
+# doi:10.1016/j.commatsci.2006.01.013
+ZnTe = Crystal("ZnTe", SGLattice(216, 6.101, atoms=[e.Zn, e.Te],
+                                 pos=['4a', '4c']),
+               CubicElasticTensor(82.0, 42.0, 55.0))
 
 CuMnSb = HalfHeuslerCubic216('Cu', 'Mn', 'Sb', 6.09, cij=CubicElasticTensor(1.056e+11, 8.27e+10, 5.47e+10))
 

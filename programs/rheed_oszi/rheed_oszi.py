@@ -13,8 +13,9 @@ class ROISelect(object):
     def __init__(self, folder, extension=".tif"):
         self.folder = folder
         self.extension = extension
+        self.background_roi = None
 
-        self.index = 0
+        self.index = 300
         self.images = self.get_images_of_folder()
         self.image = plt.imread(os.path.join(self.folder, self.images[self.index][1]))
         self.figure = plt.figure(figsize=(10, 10), tight_layout=True)
@@ -31,17 +32,29 @@ class ROISelect(object):
         self.RS = RectangleSelector(self.main_plot, self.onselect, drawtype='box')
         self.figure.canvas.mpl_connect('key_press_event', self.toggle_selector)
 
-        self.axstart = plt.axes([0.18, 0.55, 0.05, 0.04])
-        self.start_button = Button(self.axstart, 'Start')
-        self.start_button.on_clicked(self.button_callback)
+        self.axprev = plt.axes([0.08, 0.55, 0.05, 0.04])
+        self.prev_button = Button(self.axprev, '<')
+        self.prev_button.on_clicked(self.prev)
 
-        self.axnext = plt.axes([0.26, 0.55, 0.05, 0.04])
+        self.axnext = plt.axes([0.14, 0.55, 0.05, 0.04])
         self.next_button = Button(self.axnext, '>')
         self.next_button.on_clicked(self.next)
 
-        self.axprev = plt.axes([0.1, 0.55, 0.05, 0.04])
-        self.prev_button = Button(self.axprev, '<')
-        self.prev_button.on_clicked(self.prev)
+        self.axbg = plt.axes([0.22, 0.55, 0.05, 0.04])
+        self.bg_button = Button(self.axbg, 'BG')
+        self.bg_button.on_clicked(self.set_background)
+
+        self.axsps = plt.axes([0.28, 0.55, 0.05, 0.04])
+        self.sps_button = Button(self.axsps, 'ROI')
+        self.sps_button.on_clicked(self.set_sps_roi)
+
+        self.axstart = plt.axes([0.36, 0.55, 0.05, 0.04])
+        self.start_button = Button(self.axstart, 'Start')
+        self.start_button.on_clicked(self.button_callback)
+
+        self.axsave = plt.axes([0.42, 0.55, 0.05, 0.04])
+        self.save_button = Button(self.axsave, 'Save')
+        self.save_button.on_clicked(self.save)
 
         plt.show()
 
@@ -68,9 +81,21 @@ class ROISelect(object):
         return file_list
 
     def button_callback(self, event):
-        X, Y = get_folder_intensities(self.folder, self.roi)
-        self.intensity_plot.plot(X, Y, 'o')
+        self.intensities = get_folder_intensities(self.folder, self.sps_roi, bg_roi=self.background_roi)
+        X, Y = self.intensities
+        self.intensity_plot.plot(X, Y, '-')
         plt.tight_layout()
+
+    def set_background(self, event):
+        self.background_roi = self.roi
+        print("background roi set to", self.background_roi)
+
+    def set_sps_roi(self, event):
+        self.sps_roi = self.roi
+        print("sps roi set to", self.sps_roi)
+
+    def save(self, event):
+        np.savetxt(os.path.join(self.folder, "intensities.csv"), np.transpose(self.intensities), delimiter=',')
 
     def next(self, event):
         if self.index < (len(self.images) - 1):

@@ -18,16 +18,30 @@ def get_roi_image(filepath, roi):
     image = plt.imread(filepath)
     return image[roi[1][0]:roi[1][1], roi[0][0]:roi[0][1]]
 
-def get_folder_intensities(folder, roi, extension=".tif", show_images=False):
+def get_folder_intensities(folder, roi, extension=".tif", show_images=False, bg_roi=None):
     files = os.listdir(folder)
     values = []
+    bg_pixels = 0
+    bg_int = 1
+    sps_pixels = (roi[0][1]-roi[0][0])*(roi[1][1]-roi[1][0])
+    if bg_roi is not None:
+        bg_pixels = (bg_roi[0][1]-bg_roi[0][0])*(bg_roi[1][1]-bg_roi[1][0])
+    i=0
+    length = len(files)
     for file in files:
         if file.endswith(extension):
             if show_images:
                 show_image_with_roi(os.path.join(folder,file), roi, pause=True)
-            values.append([int(os.path.splitext(file)[0].split('_')[-1])/1000, get_image_intensity(get_roi_image(os.path.join(folder,file), roi))])
+            sps_int = get_image_intensity(get_roi_image(os.path.join(folder,file), roi))
+            if bg_roi is not None:
+                sps_int = sps_int/sps_pixels
+                bg_int = get_image_intensity(get_roi_image(os.path.join(folder,file), bg_roi))/bg_pixels
+            values.append([int(os.path.splitext(file)[0].split('_')[-1])/1000, sps_int, bg_int])
+        i += 1
+        print("Processed File " + str(i) + "/" + str(length))
     values.sort()
-    return [val[0] for val in values], [val[1] for val in values]
+    bg_int_start = values[0][2]
+    return [val[0] for val in values], [val[1]*(bg_int_start/val[2]) for val in values]
 
 def show_image_with_roi(filepath, roi, pause=False):
     im = plt.imread(filepath)
