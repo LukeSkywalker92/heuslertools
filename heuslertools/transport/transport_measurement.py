@@ -24,6 +24,9 @@ class TransportMeasurement(object):
             self.names[name]={"short_name": name.split("_")[0], "unit":name.split("_")[-1]}
 
     def add_data_column(self, name, data):
+        """
+        Append column to data.
+        """
         self.data = append_fields(self.data, name, data, np.float)
         for name in self.data.dtype.names:
             self.names[name]={"short_name": name.split("_")[0], "unit":name.split("_")[-1]}
