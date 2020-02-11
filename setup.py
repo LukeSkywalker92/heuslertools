@@ -20,7 +20,8 @@ setuptools.setup(
                       'scipy',
                       'periodictable',
                       'tabulate',
-                      'pyinstaller'],
+                      'pyinstaller',
+                      'scikit-image'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
