@@ -10,7 +10,7 @@ def _check_elements(*elem):
     ret = []
     for el in elem:
         if isinstance(el, str):
-            ret.append(getattr(elements, el))
+            ret.append(getattr(e, el))
         else:
             ret.append(el)
     return ret
