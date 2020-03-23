@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -121,8 +123,11 @@ class ROISelect(object):
             plt.draw()
             plt.tight_layout()
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description='Get RHEED intensities.')
     parser.add_argument('folder', type=str, help='Folder')
     args = parser.parse_args()
     rs = ROISelect(args.folder)
+
+if __name__ == "__main__":
+    main()

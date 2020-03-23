@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import tkinter as tk
 from heuslertools.squid.gamma import gamma
 

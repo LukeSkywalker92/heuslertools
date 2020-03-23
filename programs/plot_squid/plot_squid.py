@@ -19,7 +19,7 @@ def load_squid_data(file):
 
 
 
-if __name__ == '__main__':
+def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser(description='Plot SQUID measurements.')
     parser.add_argument('-f', '--files', type=str, nargs='+', help='Folder')
@@ -87,3 +87,6 @@ if __name__ == '__main__':
         plt.legend()
     plt.tight_layout()
     plt.show()
+
+if __name__ == '__main__':
+    main()
