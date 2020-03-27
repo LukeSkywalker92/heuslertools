@@ -7,7 +7,6 @@ class RHEEDimage(object):
 
     def __init__(self, path):
         self.raw_image = Image.open(path)
-        print()
         if self.raw_image.mode == 'RGB':
             self.image = self.raw_image.convert('L')
         else:
