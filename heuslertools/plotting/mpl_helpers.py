@@ -212,7 +212,7 @@ def format_axes(ax):
 
     return ax
 
- A function to rasterize components of a matplotlib figure while keeping
+# A function to rasterize components of a matplotlib figure while keeping
 # axes, labels, etc as vector components
 # https://brushingupscience.wordpress.com/2017/05/09/vector-and-raster-in-one-with-matplotlib/
 from inspect import getmembers, isclass
