@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from matplotlib.widgets import RectangleSelector, Button
 from matplotlib.backend_tools import ToolBase, ToolToggleBase
-from heuslertools.mbe.rheed_oszillation import get_folder_intensities
+from heuslertools.mbe.rheed_oszillation import get_folder_intensities, show_image_with_roi, get_image_intensity, get_roi_image
 import os
 import argparse
 
@@ -17,8 +17,9 @@ class ROISelect(object):
         self.extension = extension
         self.background_roi = None
 
-        self.index = 300
+        self.index = 1000
         self.images = self.get_images_of_folder()
+        print(self.images)
         self.image = plt.imread(os.path.join(self.folder, self.images[self.index][1]))
         self.figure = plt.figure(figsize=(10, 10), tight_layout=True)
 
@@ -82,10 +83,35 @@ class ROISelect(object):
         file_list.sort()
         return file_list
 
+    def get_folder_intensities(self, folder, roi, extension=".tif", show_images=False, bg_roi=None):
+        files = os.listdir(folder)
+        values = []
+        bg_pixels = 0
+        bg_int = 1
+        sps_pixels = (roi[0][1]-roi[0][0])*(roi[1][1]-roi[1][0])
+        if bg_roi is not None:
+            bg_pixels = (bg_roi[0][1]-bg_roi[0][0])*(bg_roi[1][1]-bg_roi[1][0])
+        i=0
+        length = len(files)
+        for file in files:
+            if file.endswith(extension):
+                if show_images:
+                    show_image_with_roi(os.path.join(folder,file), roi, pause=True)
+                sps_int = get_image_intensity(get_roi_image(os.path.join(folder,file), roi))
+                if bg_roi is not None:
+                    sps_int = sps_int/sps_pixels
+                    bg_int = get_image_intensity(get_roi_image(os.path.join(folder,file), bg_roi))/bg_pixels
+                values.append([int(os.path.splitext(file)[0].split('_')[-1])/1000, sps_int, bg_int])
+            i += 1
+            print("Processed File " + str(i) + "/" + str(length))
+        values.sort()
+        bg_int_start = values[0][2]
+        return [val[0] for val in values], [val[1]*(bg_int_start/val[2]) for val in values]
+
     def button_callback(self, event):
-        self.intensities = get_folder_intensities(self.folder, self.sps_roi, bg_roi=self.background_roi)
+        self.intensities = self.get_folder_intensities(self.folder, self.sps_roi, bg_roi=self.background_roi)
         X, Y = self.intensities
-        self.intensity_plot.plot(X, Y, '-')
+        self.intensity_plot.plot(X, Y/max(Y), '-')
         plt.tight_layout()
 
     def set_background(self, event):

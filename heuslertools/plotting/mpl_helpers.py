@@ -5,6 +5,9 @@ import subprocess
 import tempfile
 from math import sqrt
 import matplotlib
+from inspect import getmembers, isclass
+import numpy as np
+
 
 
 def get_fig_size(fig_width_cm, fig_height_cm=None):
@@ -17,42 +20,6 @@ def get_fig_size(fig_width_cm, fig_height_cm=None):
 
     size_cm = (fig_width_cm, fig_height_cm)
     return map(lambda x: x/2.54, size_cm)
-
-
-"""
-The following functions can be used by scripts to get the sizes of
-the various elements of the figures.
-"""
-
-
-def label_size():
-    """Size of axis labels
-    """
-    return 10
-
-
-def font_size():
-    """Size of all texts shown in plots
-    """
-    return 10
-
-
-def ticks_size():
-    """Size of axes' ticks
-    """
-    return 8
-
-
-def axis_lw():
-    """Line width of the axes
-    """
-    return 0.6
-
-
-def plot_lw():
-    """Line width of the plotted curves
-    """
-    return 1.5
 
 
 def figure_setup():
@@ -215,10 +182,6 @@ def format_axes(ax):
 # A function to rasterize components of a matplotlib figure while keeping
 # axes, labels, etc as vector components
 # https://brushingupscience.wordpress.com/2017/05/09/vector-and-raster-in-one-with-matplotlib/
-from inspect import getmembers, isclass
-import matplotlib
-import matplotlib.pyplot as plt
-import numpy as np
 
 
 def rasterize_and_save(fname, rasterize_list=None, fig=None, dpi=None,

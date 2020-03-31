@@ -2,33 +2,56 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.ndimage
 from skimage.measure import profile_line
+import os
 
 class AFMMeasurement(object):
     """
-    Object representing a afm measurement
+    Object representing a afm measurement.
+    You can import it with `from heuslertools.afm import AFMMeasurement`
 
-    You can import it with
-
-    ```from heuslertools.afm import AFMMeasurement```
+    Parameters
+    ----------
+    file : str
+        Path of the data file. Can be `.txt` (DME) or `.asc` (gwyddion) file. If file extension is `.txt` (DME) z data is
+        multiplied by a factor of `1e10`.
+    size : tuple
+        Size of the measurement in `(meter, meter)`, e.g. `(1e-6, 1e-6)`
     """
 
     def __init__(self, file, size):
-        self.file = file
+        self._file = file
         """Path of the data file"""
-        self.x_size, self.y_size = size
-        self.load_data()
+        self.x = []
+        """Data positions in x"""
+        self.y = []
+        """Data positions in y"""
+        self.z = []
+        """Height data"""
+        self._x_size, self._y_size = self._size
+        self._factor = 1e10
+        if os.path.splitext(self._file)[1] == '.asc':
+            self.factor = 1
+        self._load_data()
 
-    def load_data(self):
-        data = np.loadtxt(self.file)
+    def _load_data(self):
+        data = np.loadtxt(self._file)
         self.x = []
         self.y = []
         for i in range(1, len(data[0])+1):
             self.x.append(i)
         for i in range(1, len(data)+1):
             self.y.append(i)
-        self.z=(data-np.min(data))*1e10
+        self.z=(data-np.min(data))*self._factor
 
     def rms_roughness(self):
+        """
+        Returns the RMS roughness of the AFM measurement in nm.
+
+        Returns
+        -------
+        float
+            RMS roughness in nm
+        """
         z = []
         for i in self.z:
             for j in i:
@@ -36,8 +59,28 @@ class AFMMeasurement(object):
         return(np.std(z))
 
     def profile(self, src, dst, linewidth=1, order=3):
-        x_size_facor = self.x_size/max(self.x)
-        y_size_facor = self.y_size/max(self.y)
+        """
+        Calculates profile for given start and endpoints.
+
+        Parameters
+        ----------
+        src : tuple
+            start points of profile `(x0, y0)`
+        dst : tuple
+            end points of profile `(x1, y1)`
+        linewidth : int
+            linewidth of profile in pixels
+        order : int
+            order of interpolation between data points
+        Returns
+        -------
+        array:
+            length and height data of profile
+        array:
+            positions of profile to show the profile position in the afm image
+        """
+        x_size_facor = self._x_size/max(self.x)
+        y_size_facor = self._y_size/max(self.y)
         x0, y0 = src
         x1, y1 = dst
         vec = np.subtract(dst,src)
