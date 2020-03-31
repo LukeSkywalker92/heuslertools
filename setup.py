@@ -21,7 +21,10 @@ setuptools.setup(
                       'periodictable',
                       'tabulate',
                       'pyinstaller',
-                      'scikit-image'],
+                      'scikit-image',
+                      'Pillow',
+                      'lmfit',
+                      'h5py'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
