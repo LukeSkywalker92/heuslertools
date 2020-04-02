@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="heuslertools",
-    version="0.0.3",
+    version="0.0.4",
     author="Lukas Scheffler",
     author_email="lukas.scheffler@physik.uni-wuerzburg.de",
     description="Useful tools for daily work with Heusler stuff.",

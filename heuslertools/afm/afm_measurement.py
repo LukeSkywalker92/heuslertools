@@ -27,7 +27,7 @@ class AFMMeasurement(object):
         """Data positions in y"""
         self.z = []
         """Height data"""
-        self._x_size, self._y_size = self._size
+        self._x_size, self._y_size = size
         self._factor = 1e10
         if os.path.splitext(self._file)[1] == '.asc':
             self._factor = 1

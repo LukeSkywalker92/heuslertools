@@ -34,6 +34,17 @@ class RHEEDimage(object):
         """
         self.image = self.image.crop(roi)
 
+    def rotate(self, angle):
+        """
+        Rotate the image.
+
+        Parameters
+        ----------
+        angle : float
+            angle to rotate the image
+        """
+        self.image = self.image.rotate(angle)
+
     def invert(self):
         """
         Invert the image intensities.
