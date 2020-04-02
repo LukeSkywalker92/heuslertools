@@ -23,7 +23,7 @@ class Layer(object):
         """`heuslertools.magnetism.crystal.Crystal` object that the layer is made off"""
         self.v = self.l*self.w*self.h
         """Volume of the layer in \(m^{3}\)"""
-        print("Created Layer with", "l =", self.l, ", w =", self.w, ", h =", self.h, ", v =", self.v)
+        #print("Created Layer with", "l =", self.l, ", w =", self.w, ", h =", self.h, ", v =", self.v)
 
     def get_unit_cells_in_layer(self):
         """Get the number of unit cells in the layer"""

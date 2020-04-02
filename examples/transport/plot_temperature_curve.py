@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from heuslertools.transport.load_transport_data import TransportMeasurement
+from heuslertools.transport import TransportMeasurement
 
 
 x_name = "Temperature_LS332_K"

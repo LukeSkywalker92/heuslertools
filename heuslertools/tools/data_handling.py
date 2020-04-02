@@ -22,6 +22,6 @@ def load_data(file, identifier, delimiter):
     data = {}
     data = np.genfromtxt(fname=file, delimiter=delimiter, skip_header=search_data_start(file, identifier), names=True)
     first_line = [str(i) for i in data[0]]
-    if 'nan' in first_line:
+    if all(x == 'nan' for x in first_line):
         data = data[1:]
     return data

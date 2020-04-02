@@ -51,6 +51,8 @@ data_sample["suszeptibility"] = sample.emu_to_sus(data_sample["compensated_momen
 # fit cw
 
 fit = fit_cw(data_sample["temperature"], data_sample["suszeptibility"], fit_range[0], fit_range[1])
+
+
 mu_eff = sample.crystal.get_exp_eff_moment_from_sus(fit[0])
 m_sat = sample.crystal.mu_eff_to_m_sat(mu_eff)
 t_cw = -fit[1]/fit[0]

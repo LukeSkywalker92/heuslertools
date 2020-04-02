@@ -60,5 +60,4 @@ class RHEEDimage(object):
             intensities along profile
         """
         profile = profile_line(np.transpose(np.array(self.image)), src, dst, linewidth=linewidth, order=order)
-        len(profile)
         return profile

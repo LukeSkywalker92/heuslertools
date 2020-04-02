@@ -29,7 +29,7 @@ class Crystal(object):
         self.v = self.a*self.a*self.c
         """Volume of unit cell in \(m^{3}\)"""
         self.curie_constant = (MU_ZERO*self.n*self.mu_eff*self.mu_eff*MU_BOHR*MU_BOHR)/(3*K_B*self.v)
-        print("Created Crystal with", "a =", self.a, ", c =", self.c, ", v =", self.v , ", n =", n)
+        #print("Created Crystal with", "a =", self.a, ", c =", self.c, ", v =", self.v , ", n =", n)
 
     def pm_suszeptibility(self, temperature):
         """

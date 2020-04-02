@@ -30,7 +30,7 @@ class AFMMeasurement(object):
         self._x_size, self._y_size = self._size
         self._factor = 1e10
         if os.path.splitext(self._file)[1] == '.asc':
-            self.factor = 1
+            self._factor = 1
         self._load_data()
 
     def _load_data(self):
