@@ -1,7 +1,5 @@
 import setuptools
 
-HEUSLER_MPL_STYLE = 'heuslertools/plotting/heusler.mplstyle'
-
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
@@ -34,9 +32,3 @@ setuptools.setup(
              'programs/plot_squid/plot_squid.py',
              'programs/rheed_oszi/rheed_oszi.py'],
 )
-
-# import matplotlib
-# from shutil import copyfile
-# import os
-#
-# copyfile(HEUSLER_MPL_STYLE, os.path.join(matplotlib.get_configdir(),'stylelib', 'heusler.mplstyle'))
