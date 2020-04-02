@@ -24,7 +24,8 @@ setuptools.setup(
                       'scikit-image',
                       'Pillow',
                       'lmfit',
-                      'h5py'],
+                      'h5py',
+                      'pyqtchart'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
