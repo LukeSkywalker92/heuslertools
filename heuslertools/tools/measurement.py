@@ -29,12 +29,15 @@ class Measurement(object):
         """Numpy ndarray containing the data."""
         self.names = {}
         """Dict containing the names, short names and units of the data columns"""
-        for name in self.data.dtype.names:
-            self.names[name] = {"short_name": ' '.join(
-                name.split("_")[0:-1]), "unit": name.split("_")[-1]}
+        self._generate_names()
 
     def _load_data(self):
         return load_data(self.file, self._identifier, self._delimiter)
+
+    def _generate_names(self):
+        for name in self.data.dtype.names:
+            self.names[name] = {"short_name": ' '.join(
+                name.split("_")[0:-1]), "unit": name.split("_")[-1]}
 
     def add_data_column(self, name, data):
         """Add column to data.
@@ -47,9 +50,7 @@ class Measurement(object):
             data
         """
         self.data = append_fields(self.data, name, data, np.float)
-        for name in self.data.dtype.names:
-            self.names[name] = {"short_name": ' '.join(
-                name.split("_")[0:-1]), "unit": name.split("_")[-1]}
+        self._generate_names()
 
     def append_measurement(self, file, identifier):
         """Append data from another file.
@@ -155,7 +156,7 @@ class Measurement(object):
         """
         headers = ["name", "short_name", "unit"]
         table = [[name, self.names[name]["short_name"], self.names[name]["unit"]]
-                 for name in self.data.dtype.names]
+                 for name in self.names]
         print("Availiable names:")
         print(tabulate(table, headers))
 
