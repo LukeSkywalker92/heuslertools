@@ -7,7 +7,7 @@ class XRDMeasurement(Measurement):
 
     Parameters
     ----------
-    file : sdr
+    file : str
         path of xrdml file.
 
     Attributes
