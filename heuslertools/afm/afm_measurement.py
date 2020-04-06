@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import scipy.ndimage
 from skimage.measure import profile_line
 import os
+from matplotlib import ticker
 
 class AFMMeasurement(object):
     """
@@ -91,3 +92,42 @@ class AFMMeasurement(object):
         profile = profile_line(np.transpose(self.z), (x0, y0), (x1,y1), linewidth=linewidth, order=order)
         profile_length = np.linspace(0, length, num=len(profile))
         return [profile_length, profile], np.transpose(line)
+
+    def afm_xy_ticks(self, ax):
+        ax.tick_params(
+            axis='both',          # changes apply to the x-axis
+            which='both',      # both major and minor ticks are affected
+            bottom=False,      # ticks along the bottom edge are off
+            top=False,         # ticks along the top edge are off
+            left=False,
+            right=False,
+            labelbottom=False,
+            labelleft=False)
+
+    def afm_z_ticks(self, cb, ticks):
+        tick_locator = ticker.FixedLocator(ticks)
+        cb.locator = tick_locator
+        cb.update_ticks()
+
+    def afm_aspect_ratio(self, ax):
+        xleft, xright = ax.get_xlim()
+        ybottom, ytop = ax.get_ylim()
+        ax.set_aspect(abs((xright-xleft)/(ybottom-ytop))*1)
+
+    def afm_show_profile(self, ax, line, box=True, arrow=True, color='k'):
+        src = (np.mean(line[0][0:2]), np.mean(line[1][0:2]))
+        dst = (np.mean(line[0][2:4]), np.mean(line[1][2:4]))
+        if box:
+            ax.plot(line[0], line[1], '-', c=color)
+        if arrow:
+            ax.annotate("",
+            xy=src,    # start point
+            xycoords='data',
+            xytext=dst,    # end point
+            textcoords='data',
+            arrowprops=dict(
+                arrowstyle="<-",
+                connectionstyle="arc3",
+                color=color,
+                ),
+            )
