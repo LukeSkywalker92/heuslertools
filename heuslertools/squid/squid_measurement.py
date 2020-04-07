@@ -12,8 +12,8 @@ class SQUIDMeasurement(Measurement):
     ```from heuslertools.squid import SQUIDMeasurement```
     """
 
-    def __init__(self, file):
-        super().__init__(file, "[Data]", delimiter=',')
+    def __init__(self, file, **kwargs):
+        super().__init__(file, "[Data]", delimiter=',', **kwargs)
 
     def add_compensated_moment(self, x, y, gap_measurement, reference_measurement, sample, gap_sample, reference_sample):
         interp_gap = gap_measurement.interpolation(x, y)

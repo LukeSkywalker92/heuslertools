@@ -14,7 +14,7 @@ def search_data_start(file, identifier):
             return i
         i += 1
 
-def load_data(file, identifier, delimiter):
+def load_data(file, identifier, delimiter, start_row=0, end_row=None):
     """
     Loads a measurement and returns the data
     moment data.
@@ -24,4 +24,4 @@ def load_data(file, identifier, delimiter):
     first_line = [str(i) for i in data[0]]
     if all(x == 'nan' for x in first_line):
         data = data[1:]
-    return data
+    return data[start_row:end_row]

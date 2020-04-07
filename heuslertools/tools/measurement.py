@@ -20,11 +20,13 @@ class Measurement(object):
     """
 
 
-    def __init__(self, file, identifier, delimiter=None):
+    def __init__(self, file, identifier, delimiter=None, start_row=0, end_row=None):
         self.file = file
         """Path of the data file"""
         self._identifier = identifier
         self._delimiter = delimiter
+        self._start_row = start_row
+        self._end_row = end_row
         self.data = self._load_data()
         """Numpy ndarray containing the data."""
         self.names = {}
@@ -32,7 +34,7 @@ class Measurement(object):
         self._generate_names()
 
     def _load_data(self):
-        return load_data(self.file, self._identifier, self._delimiter)
+        return load_data(self.file, self._identifier, self._delimiter, self._start_row, self._end_row)
 
     def _generate_names(self):
         for name in self.data.dtype.names:
