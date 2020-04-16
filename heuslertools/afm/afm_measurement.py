@@ -114,6 +114,17 @@ class AFMMeasurement(object):
         ybottom, ytop = ax.get_ylim()
         ax.set_aspect(abs((xright-xleft)/(ybottom-ytop))*1)
 
+    def show_scale_bar(self, ax, length, label, position, lw=1, color='k', fontsize=8, text_y_offset=0.05):
+        left, right = self.x[0], self.x[-1]
+        bottom, top = self.y[0], self.y[-1]
+        width = right - left
+        height = top - bottom
+        bar_length = length/(self._x_size/len(self.x))
+        x = [position[0]*width+left, position[0]*width+left+bar_length]
+        y = [bottom+position[1]*height, bottom+position[1]*height]
+        line = ax.plot(x, y, '-', lw=lw, color=color)
+        ax.text((x[1]+x[0])/2, y[0]-text_y_offset*len(self.y), label, verticalalignment='top', horizontalalignment='center', color=color, fontsize=fontsize)
+
     def afm_show_profile(self, ax, line, box=True, arrow=True, color='k'):
         src = (np.mean(line[0][0:2]), np.mean(line[1][0:2]))
         dst = (np.mean(line[0][2:4]), np.mean(line[1][2:4]))
