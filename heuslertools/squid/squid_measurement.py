@@ -22,3 +22,9 @@ class SQUIDMeasurement(Measurement):
                                                           interp_gap, interp_reference,
                                                           sample.beta(gap_sample, reference_sample))
         self.add_data_column("Compensated_Moment_emu", compensated_moment)
+
+    def mean_field(self):
+        return round(np.mean(self.data['Field_Oe']),1)
+
+    def mean_temperature(self):
+        return round(np.mean(self.data['Temperature_K']),1)

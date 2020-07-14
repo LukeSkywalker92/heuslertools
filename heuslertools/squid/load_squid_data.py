@@ -12,5 +12,5 @@ def load_squid_data(file):
     """
     warnings.warn("load_squid_data is deprecated. Use SQUIDMeasurement object instead.", DeprecationWarning, stacklevel=2)
     data = {}
-    data["field"], data["temperature"], data["long_moment"] = np.loadtxt(fname=file, skiprows=search_data_start(file, "[Data]")+1, delimiter=",", usecols = (2,3,4), unpack=True)
+    data["field"], data["temperature"], data["long_moment"] = np.loadtxt(fname=file, skiprows=search_data_start(file, "[Data]", None)+1, delimiter=",", usecols = (2,3,4), unpack=True)
     return data

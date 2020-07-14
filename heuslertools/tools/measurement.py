@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from tabulate import tabulate
 from heuslertools.tools.data_handling import load_data
 from scipy.interpolate import interp1d
+import copy
 
 
 class Measurement(object):
@@ -191,3 +192,27 @@ class Measurement(object):
         if mean:
             data = data - np.mean(data)
         self.add_data_column(data_name, data)
+
+    def filter_data(self, column, expression, filter_type='keep', return_new_measurement=False):
+        filter_arr = []
+        for value in self.data[column]:
+            filter_arr.append(eval(expression.replace('x', str(value))))
+        if filter_type == 'delete':
+            filter_arr = [not x for x in filter_arr]
+        if return_new_measurement:
+            measurement = copy.copy(self)
+        else:
+            measurement = self
+        measurement.data = measurement.data[filter_arr]
+        return measurement
+
+
+    def save(self, filename):
+        names = []
+        for name in self.names:
+            names.append(name)
+        header = self._identifier + '\n' + ','.join(names)
+        np.savetxt(filename, self.data,
+                   delimiter=self._delimiter,
+                   header=header,
+                   comments='')
