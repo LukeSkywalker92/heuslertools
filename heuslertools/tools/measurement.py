@@ -59,7 +59,7 @@ class Measurement(object):
         self.data = append_fields(self.data, name, data, np.float)
         self._generate_names()
 
-    def append_measurement(self, file, identifier, start_row=0, end_row=None):
+    def append_measurement(self, file, start_row=0, end_row=None):
         """Append data from another file.
 
         Parameters
@@ -69,7 +69,7 @@ class Measurement(object):
         identifier : str
             identifier for data start
         """
-        self.data = np.append(self.data, load_data(self.file, self._identifier, delimiter=self._delimiter, start_row=start_row, end_row=end_row, names=self._names, encoding=self._encoding))
+        self.data = np.append(self.data, load_data(file, self._identifier, delimiter=self._delimiter, start_row=start_row, end_row=end_row, names=self._names, encoding=self._encoding))
 
     def plot(self, x, y, *args, show=True, label=True, **kwargs):
         """Plot data
