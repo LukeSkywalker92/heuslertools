@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from tabulate import tabulate
 from heuslertools.tools.data_handling import load_data
 from scipy.interpolate import interp1d
+import copy
 
 
 class Measurement(object):
@@ -20,13 +21,15 @@ class Measurement(object):
     """
 
 
-    def __init__(self, file, identifier, delimiter=None, start_row=0, end_row=None):
+    def __init__(self, file, identifier, delimiter=None, start_row=0, end_row=None, names=True, encoding=None):
         self.file = file
         """Path of the data file"""
         self._identifier = identifier
         self._delimiter = delimiter
         self._start_row = start_row
         self._end_row = end_row
+        self._names = names
+        self._encoding = encoding
         self.data = self._load_data()
         """Numpy ndarray containing the data."""
         self.names = {}
@@ -34,7 +37,9 @@ class Measurement(object):
         self._generate_names()
 
     def _load_data(self):
-        return load_data(self.file, self._identifier, self._delimiter, self._start_row, self._end_row)
+        return load_data(self.file, self._identifier, delimiter=self._delimiter,
+                         start_row=self._start_row, end_row=self._end_row,
+                         names=self._names, encoding=self._encoding)
 
     def _generate_names(self):
         for name in self.data.dtype.names:
@@ -54,7 +59,7 @@ class Measurement(object):
         self.data = append_fields(self.data, name, data, np.float)
         self._generate_names()
 
-    def append_measurement(self, file, identifier):
+    def append_measurement(self, file, start_row=0, end_row=None):
         """Append data from another file.
 
         Parameters
@@ -64,8 +69,7 @@ class Measurement(object):
         identifier : str
             identifier for data start
         """
-        self.data = np.append(self.data, load_data(
-            self.file, self._identifier, self._delimiter))
+        self.data = np.append(self.data, load_data(file, self._identifier, delimiter=self._delimiter, start_row=start_row, end_row=end_row, names=self._names, encoding=self._encoding))
 
     def plot(self, x, y, *args, show=True, label=True, **kwargs):
         """Plot data
@@ -188,3 +192,27 @@ class Measurement(object):
         if mean:
             data = data - np.mean(data)
         self.add_data_column(data_name, data)
+
+    def filter_data(self, column, expression, filter_type='keep', return_new_measurement=False):
+        filter_arr = []
+        for value in self.data[column]:
+            filter_arr.append(eval(expression.replace('x', str(value))))
+        if filter_type == 'delete':
+            filter_arr = [not x for x in filter_arr]
+        if return_new_measurement:
+            measurement = copy.copy(self)
+        else:
+            measurement = self
+        measurement.data = measurement.data[filter_arr]
+        return measurement
+
+
+    def save(self, filename):
+        names = []
+        for name in self.names:
+            names.append(name)
+        header = self._identifier + '\n' + ','.join(names)
+        np.savetxt(filename, self.data,
+                   delimiter=self._delimiter,
+                   header=header,
+                   comments='')
