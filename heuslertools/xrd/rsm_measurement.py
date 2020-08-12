@@ -56,10 +56,14 @@ class RSMMeasurement(Measurement):
         return angles[axis]
 
     def _get_substrate_peak(self):
-        anggridder = xu.FuzzyGridder2D(500, 500)
-        anggridder(self.data['Omega'], self.data['2Theta'], self.data['psd'])
-        angINT = xu.maplog(anggridder.data.transpose(), 10, 0)
-        return anggridder.xaxis[np.unravel_index(angINT.argmax(), angINT.shape)[0]], anggridder.yaxis[np.unravel_index(angINT.argmax(), angINT.shape)[1]]
+        # anggridder = xu.FuzzyGridder2D(500, 500)
+        # anggridder(self.data['Omega'], self.data['2Theta'], self.data['psd'])
+        # angINT = xu.maplog(anggridder.data.transpose(), 10, 0)
+        # return anggridder.xaxis[np.unravel_index(angINT.argmax(), angINT.shape)[0]], anggridder.yaxis[np.unravel_index(angINT.argmax(), angINT.shape)[1]]
+        threshold = 10**int(np.log10(self.data['psd'].max()))
+        max_values = np.where(self.data['psd'] > threshold)
+        return np.mean(self.data['Omega'][max_values]), np.mean(self.data['2Theta'][max_values])
+
 
     def get_angle_data(self, size=300, dynamic_range=10):
         anggridder = xu.FuzzyGridder2D(300, 300)
@@ -67,8 +71,13 @@ class RSMMeasurement(Measurement):
         angINT = xu.maplog(anggridder.data.transpose(), 3.3, 0)
         return anggridder, angINT
 
-    def get_q_data(self, size=300, dynamic_range=10):
-        om_sub, tt_sub = self._get_substrate_peak()
+    def get_q_data(self, size=300, dynamic_range=10, om_sub=None, tt_sub=None):
+        sub_peak = self._get_substrate_peak()
+        if om_sub == None:
+            om_sub = sub_peak[0]
+        if tt_sub == None:
+            tt_sub = sub_peak[1]
+        #om_sub, tt_sub = self._get_substrate_peak()
         qx, qy, qz = self.hxrd.Ang2Q(self.data['Omega'],
                                      self.data['2Theta'],
                                      delta=[om_sub - self._get_nominal_angle('Omega'),
@@ -78,8 +87,13 @@ class RSMMeasurement(Measurement):
         qINT = xu.maplog(qgridder.data.transpose(), dynamic_range, 0)
         return qgridder, qINT
 
-    def get_hkl_data(self, size=300, dynamic_range=10):
-        om_sub, tt_sub = self._get_substrate_peak()
+    def get_hkl_data(self, size=300, dynamic_range=10, om_sub=None, tt_sub=None):
+        sub_peak = self._get_substrate_peak()
+        if om_sub == None:
+            om_sub = sub_peak[0]
+        if tt_sub == None:
+            tt_sub = sub_peak[1]
+        #om_sub, tt_sub = self._get_substrate_peak()
         h, k, l = self.hxrd.Ang2HKL(self.data['Omega'],
                                self.data['2Theta'],
                                delta=[om_sub - self._get_nominal_angle('Omega'),
