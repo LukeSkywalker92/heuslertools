@@ -68,8 +68,11 @@ class RSMMeasurement(Measurement):
     def get_angle_data(self, size=300, dynamic_range=10):
         anggridder = xu.FuzzyGridder2D(300, 300)
         anggridder(self.data['Omega'], self.data['2Theta'], self.data['psd'])
-        angINT = xu.maplog(anggridder.data.transpose(), 3.3, 0)
-        return anggridder, angINT
+        angINT = xu.maplog(anggridder.data.transpose(), dynamic_range, 0)
+        ticks = []
+        for i in range(round(dynamic_range)+1):
+            ticks.append(i)
+        return anggridder, angINT, ticks
 
     def get_q_data(self, size=300, dynamic_range=10, om_sub=None, tt_sub=None):
         sub_peak = self._get_substrate_peak()
