@@ -6,6 +6,7 @@ from xrayutilities.materials import (Crystal, CubicAlloy, CubicElasticTensor, SG
 from xrayutilities.materials.heuslerlib import *
 from xrayutilities.materials import elements as e
 from xrayutilities.materials import InAs, GaAs
+from xrayutilities.materials import *
 
 def _check_elements(*elem):
     ret = []

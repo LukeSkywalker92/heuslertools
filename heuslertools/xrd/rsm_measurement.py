@@ -85,7 +85,10 @@ class RSMMeasurement(Measurement):
         qgridder = xu.FuzzyGridder2D(size, size)
         qgridder(qy, qz, self.data['psd'])
         qINT = xu.maplog(qgridder.data.transpose(), dynamic_range, 0)
-        return qgridder, qINT
+        ticks = []
+        for i in range(round(dynamic_range)+1):
+            ticks.append(i)
+        return qgridder, qINT, ticks
 
     def get_hkl_data(self, size=300, dynamic_range=10, om_sub=None, tt_sub=None):
         sub_peak = self._get_substrate_peak()
@@ -102,4 +105,7 @@ class RSMMeasurement(Measurement):
         hklgridder = xu.FuzzyGridder2D(size, size)
         hklgridder(h, l, self.data['psd'])
         hklINT = xu.maplog(hklgridder.data.transpose(), dynamic_range, 0)
-        return hklgridder, hklINT
+        ticks = []
+        for i in range(round(dynamic_range)+1):
+            ticks.append(i)
+        return hklgridder, hklINT, ticks
