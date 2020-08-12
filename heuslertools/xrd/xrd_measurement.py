@@ -1,6 +1,7 @@
 from heuslertools.tools.measurement import Measurement
 import xrayutilities as xu
 import warnings
+import numpy as np
 
 class XRDMeasurement(Measurement):
     """Object representing xrd measurement.
@@ -30,6 +31,12 @@ class XRDMeasurement(Measurement):
     def _load_data(self):
         self.xrdml = xu.io.XRDMLFile(self.file)
         return self.xrdml.scans[0].ddict
+
+    def append_measurement(self, file):
+        xrdml = xu.io.XRDMLFile(file)
+        data = xrdml.scans[0].ddict
+        for key in data.keys():
+            self.data[key] = np.append(self.data[key], data[key])
 
     def _generate_names(self):
         for name in self.data:
