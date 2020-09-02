@@ -43,4 +43,4 @@ class XPSMeasurement(Measurement):
         file : str
             path of file to append
         """
-        self.data = np.append(self.data, load_xps_data(self.file))
+        self.data = np.append(self.data, load_xps_data(file))

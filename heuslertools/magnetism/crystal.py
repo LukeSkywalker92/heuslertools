@@ -1,5 +1,7 @@
 import math
 from .si_constants import g, K_B, MU_BOHR, MU_ZERO
+from periodictable import formula
+from scipy.constants import physical_constants
 
 
 class Crystal(object):
@@ -11,7 +13,7 @@ class Crystal(object):
     ```from heuslertools.magnetism import Crystal```
     """
 
-    def __init__(self, a, n, mu_eff, t_cw, c=None):
+    def __init__(self, a, n, mu_eff=0, t_cw=0, c=None, chemical_formula=None):
         self.a = a*1e-10
         """Horizontal lattice constant of crystal in angstroms"""
         self.c = 0
@@ -29,7 +31,17 @@ class Crystal(object):
         self.v = self.a*self.a*self.c
         """Volume of unit cell in \(m^{3}\)"""
         self.curie_constant = (MU_ZERO*self.n*self.mu_eff*self.mu_eff*MU_BOHR*MU_BOHR)/(3*K_B*self.v)
+        self.chemical_formula = formula(chemical_formula)
         #print("Created Crystal with", "a =", self.a, ", c =", self.c, ", v =", self.v , ", n =", n)
+
+
+    def get_density(self, unit='kg/m3'):
+        # kg/m**3
+        density = (self.n*self.chemical_formula.mass*physical_constants['atomic mass constant'][0])/self.v
+        if unit == 'kg/m3':
+            return density
+        elif unit == 'g/cm3':
+            return density*1e-3
 
     def pm_suszeptibility(self, temperature):
         """
