@@ -22,7 +22,8 @@ setuptools.setup(
                       'scikit-image',
                       'Pillow',
                       'lmfit',
-                      'h5py'],
+                      'h5py',
+                      'uncertainties'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
