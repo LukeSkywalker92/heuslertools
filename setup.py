@@ -23,7 +23,8 @@ setuptools.setup(
                       'Pillow',
                       'lmfit',
                       'h5py',
-                      'uncertainties'],
+                      'uncertainties',
+                      'crystals'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
