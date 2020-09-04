@@ -5,6 +5,7 @@ from skimage.measure import profile_line
 import os
 from matplotlib import ticker
 from .ser_reader import serReader
+from PIL import Image
 
 class TEMImage(object):
     """
@@ -39,9 +40,12 @@ class TEMImage(object):
             self.x.append(i)
         for i in range(1, len(data['data'])+1):
             self.y.append(i)
+        self.pixel_size_x = data['pixelSizeX']
+        self.pixel_size_y = data['pixelSizeY']
         self._x_size = data['pixelSizeX']*len(self.x)
         self._y_size = data['pixelSizeY']*len(self.y)
         self.z = data['data']
+        self.image = Image.fromarray(self.z)
 
     def profile(self, src, dst, linewidth=1, order=3):
         """
@@ -104,6 +108,11 @@ class TEMImage(object):
         y = [bottom+position[1]*height, bottom+position[1]*height]
         line = ax.plot(x, y, '-', lw=lw, color=color)
         ax.text((x[1]+x[0])/2, y[0]-text_y_offset*len(self.y), label, verticalalignment='top', horizontalalignment='center', color=color, fontsize=fontsize)
+
+    def show_auto_scale_bar(self, ax, position, **kwargs):
+        length = float(format(self._x_size/10, '.1g'))
+        label = format(self._x_size/10, '.1g') + ' m'
+        self.show_scale_bar(ax, length, label, position, **kwargs)
 
     def show_profile(self, ax, line, box=True, arrow=True, color='k'):
         src = (np.mean(line[0][0:2]), np.mean(line[1][0:2]))

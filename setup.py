@@ -31,5 +31,6 @@ setuptools.setup(
     scripts=['programs/generateRHEEDvideo/generateRHEEDvideo',
              'programs/gamma/gamma.py',
              'programs/plot_squid/plot_squid.py',
-             'programs/rheed_oszi/rheed_oszi.py'],
+             'programs/rheed_oszi/rheed_oszi.py',
+             'programs/tem/tem_viewer.py'],
 )
