@@ -74,7 +74,7 @@ class O2TMeasurement(XRDMeasurement):
             fitmdyn.set_param_hint(name+'_a', expr=sub.material.name+'_a')
             fitmdyn.set_param_hint(name+'_thickness', vary=True)
         for bound in bounds:
-            fitmdyn.set_param_hint(bound['name'], min=bound['min'], max=bound['max'])
+            fitmdyn.set_param_hint(**bound)
         paramsdyn = fitmdyn.make_params()
         fitmdyn.lmodel.set_hkl((H, K, L))
         fitr = fitmdyn.fit(self.data['detector'], paramsdyn, ai)
