@@ -28,7 +28,7 @@ class O2TMeasurement(XRDMeasurement):
         """
         self.layerstack = layerstack
 
-    def simulate_o2t(self, H, K, L, bounds, monochromator=xu.materials.Ge.planeDistance(2, 2, 0), polarization='both', I0=1000000000):
+    def simulate_o2t(self, H, K, L, bounds=[], monochromator=xu.materials.Ge.planeDistance(2, 2, 0), polarization='both', I0=1000000000, offset=0.0):
         """Short summary.
 
         Parameters
@@ -58,7 +58,7 @@ class O2TMeasurement(XRDMeasurement):
         """
         sub = self.layerstack[0]
         qx = np.sqrt(sub.material.Q(H, K, L)[0]**2 + sub.material.Q(H, K, L)[1]**2)
-        tt = self.data['2Theta']
+        tt = self.data['2Theta'] - offset
         ai = tt/2
         qz = xu.simpack.get_qz(qx, ai, self.en)
         thetaMono = np.arcsin(self.wavelength/(2 * monochromator))
