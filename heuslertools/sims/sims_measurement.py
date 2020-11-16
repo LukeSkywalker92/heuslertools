@@ -6,7 +6,6 @@ def conv(file):
     i=0
     for x in open(file):
         if i == 2:
-            print('yay')
             yield x.replace('#', 'Number').encode()
         else:
             yield x.replace(',', '.').encode()
@@ -14,7 +13,6 @@ def conv(file):
 
 def load_sims_data(file):
     data = np.genfromtxt((conv(file)), delimiter='\t', comments='#', skip_header=2, names=True)
-    print(data.dtype.names)
     return data
 
 class SIMSMeasurement(Measurement):
