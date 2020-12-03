@@ -5,7 +5,7 @@ from heuslertools.xrd.materials import CuMnSb
 from heuslertools.cristallography import Crystal
 
 
-c = Crystal(CuMnSb())
+c = Crystal(CuMnSb)
 
 
 strain = [
