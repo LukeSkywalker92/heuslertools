@@ -1,9 +1,11 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import scipy.ndimage
-from skimage.measure import profile_line
 import os
+
+import matplotlib.pyplot as plt
+import numpy as np
+import scipy.ndimage
 from matplotlib import ticker
+from skimage.measure import profile_line
+
 
 class AFMMeasurement(object):
     """
@@ -42,7 +44,7 @@ class AFMMeasurement(object):
             self.x.append(i)
         for i in range(1, len(data)+1):
             self.y.append(i)
-        self.z=(data-np.min(data))*self._factor
+        self.z = (data-np.min(data))*self._factor
 
     def rms_roughness(self):
         """
@@ -84,12 +86,16 @@ class AFMMeasurement(object):
         y_size_facor = self._y_size/max(self.y)
         x0, y0 = src
         x1, y1 = dst
-        vec = np.subtract(dst,src)
-        neg = (np.array([-1*vec[1], vec[0]])/np.linalg.norm(np.array([-1*vec[1],vec[0]])))*linewidth*0.5
+        vec = np.subtract(dst, src)
+        neg = (np.array([-1*vec[1], vec[0]]) /
+               np.linalg.norm(np.array([-1*vec[1], vec[0]])))*linewidth*0.5
         pos = -neg
-        line = [np.add(src, neg), np.add(src, pos), np.add(dst, pos), np.add(dst, neg), np.add(src, neg)]
-        length = np.linalg.norm(np.array([vec[0]*x_size_facor, vec[1]*y_size_facor]))
-        profile = profile_line(np.transpose(self.z), (x0, y0), (x1,y1), linewidth=linewidth, order=order)
+        line = [np.add(src, neg), np.add(src, pos), np.add(
+            dst, pos), np.add(dst, neg), np.add(src, neg)]
+        length = np.linalg.norm(
+            np.array([vec[0]*x_size_facor, vec[1]*y_size_facor]))
+        profile = profile_line(np.transpose(
+            self.z), (x0, y0), (x1, y1), linewidth=linewidth, order=order)
         profile_length = np.linspace(0, length, num=len(profile))
         return [profile_length, profile], np.transpose(line)
 
@@ -123,7 +129,8 @@ class AFMMeasurement(object):
         x = [position[0]*width+left, position[0]*width+left+bar_length]
         y = [bottom+position[1]*height, bottom+position[1]*height]
         line = ax.plot(x, y, '-', lw=lw, color=color)
-        ax.text((x[1]+x[0])/2, y[0]-text_y_offset*len(self.y), label, verticalalignment='top', horizontalalignment='center', color=color, fontsize=fontsize)
+        ax.text((x[1]+x[0])/2, y[0]-text_y_offset*len(self.y), label, verticalalignment='top',
+                horizontalalignment='center', color=color, fontsize=fontsize)
 
     def afm_show_profile(self, ax, line, box=True, arrow=True, color='k'):
         src = (np.mean(line[0][0:2]), np.mean(line[1][0:2]))
@@ -132,13 +139,13 @@ class AFMMeasurement(object):
             ax.plot(line[0], line[1], '-', c=color)
         if arrow:
             ax.annotate("",
-            xy=src,    # start point
-            xycoords='data',
-            xytext=dst,    # end point
-            textcoords='data',
-            arrowprops=dict(
-                arrowstyle="<-",
-                connectionstyle="arc3",
-                color=color,
-                ),
-            )
+                        xy=src,    # start point
+                        xycoords='data',
+                        xytext=dst,    # end point
+                        textcoords='data',
+                        arrowprops=dict(
+                            arrowstyle="<-",
+                            connectionstyle="arc3",
+                            color=color,
+                        ),
+                        )

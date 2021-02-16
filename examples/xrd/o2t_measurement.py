@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 ##### LAYERSTACK #####
 sub = xu.simpack.Layer(xu.materials.InAs, np.inf)
-lay1 = xu.simpack.Layer(CuMnSb(), 367, relaxation=0.0)
+lay1 = xu.simpack.Layer(CuMnSb, 367, relaxation=0.0)
 layerstack = xu.simpack.PseudomorphicStack001('CuMnSb on InAs', sub, lay1)
 
 xrd = O2TMeasurement('data/H1202_o2t_fine_002.xrdml', layerstack)

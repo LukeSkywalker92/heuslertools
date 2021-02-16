@@ -1,6 +1,8 @@
 import math
+
 from .si_constants import MU_BOHR
-from .unit_conversion import emu_to_amps_m2, oersted_to_amps_per_meter, amps_m2_to_emu
+from .unit_conversion import (amps_m2_to_emu, emu_to_amps_m2,
+                              oersted_to_amps_per_meter)
 
 
 class Layer(object):
@@ -35,7 +37,7 @@ class Layer(object):
 
     def amp_per_meter_to_susteptibility(self, amp, field):
         """Convert \(\\frac{A}{m}\) to suszeptibility"""
-        return ( amp * 4 * math.pi ) / field
+        return (amp * 4 * math.pi) / field
 
     def ampere_per_meter_to_emu(self, am):
         """Convert \(\\frac{A}{m}\) to \(emu\)"""
@@ -43,11 +45,11 @@ class Layer(object):
 
     def mag_per_unitformula(self, mag):
         """Normalize magnetization to magnetization per unit formula"""
-        return ( mag * self.crystal.v ) / self.crystal.n
+        return (mag * self.crystal.v) / self.crystal.n
 
     def total_mag(self, mpuf):
         """Get total magnetization from magnetization per unit formula"""
-        return ( mpuf * self.crystal.n ) / self.crystal.v
+        return (mpuf * self.crystal.n) / self.crystal.v
 
     def emu_to_mubohr_per_unitformula(self, emu):
         """Convert \(emu\) to \(\\frac{µ_{B}}{u.f.}\)"""

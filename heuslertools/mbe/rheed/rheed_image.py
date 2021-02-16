@@ -1,7 +1,8 @@
-from PIL import Image
-import PIL.ImageOps
-from skimage.measure import profile_line
 import numpy as np
+import PIL.ImageOps
+from PIL import Image
+from skimage.measure import profile_line
+
 
 class RHEEDimage(object):
     """
@@ -13,6 +14,7 @@ class RHEEDimage(object):
     path : str
         Path of the RHEED image
     """
+
     def __init__(self, path):
         self.raw_image = Image.open(path)
         """RAW image. This won't be affected by any operations."""
@@ -70,5 +72,6 @@ class RHEEDimage(object):
         array:
             intensities along profile
         """
-        profile = profile_line(np.transpose(np.array(self.image)), src, dst, linewidth=linewidth, order=order)
+        profile = profile_line(np.transpose(
+            np.array(self.image)), src, dst, linewidth=linewidth, order=order)
         return profile
