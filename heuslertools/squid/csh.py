@@ -23,3 +23,6 @@ def calculate_compensated_moment(moment_sample, x_sample, interp_gap, interp_ref
     Calculates the compensated moment for a measurement of a sample.
     """
     return moment_sample - interp_reference(x_sample) + (beta * interp_gap(x_sample))
+
+def calculate_compensated_moment_ref_only(moment_sample, x_sample, interp_reference, sample, reference):
+    return ((moment_sample/sample.gamma) - ((interp_reference(x_sample)/reference.gamma)*(sample.weight/reference.weight)))

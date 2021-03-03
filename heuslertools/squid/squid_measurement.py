@@ -1,5 +1,5 @@
 from heuslertools.tools.measurement import Measurement
-from heuslertools.squid.csh import calculate_compensated_moment
+from heuslertools.squid.csh import calculate_compensated_moment, calculate_compensated_moment_ref_only
 import numpy as np
 
 
@@ -21,6 +21,13 @@ class SQUIDMeasurement(Measurement):
         compensated_moment = calculate_compensated_moment(self.data[y], self.data[x],
                                                           interp_gap, interp_reference,
                                                           sample.beta(gap_sample, reference_sample))
+        self.add_data_column("Compensated_Moment_emu", compensated_moment)
+
+    def add_compensated_moment_ref_only(self, x, y, reference_measurement, sample, reference_sample):
+        interp_reference = reference_measurement.interpolation(x, y)
+        compensated_moment = calculate_compensated_moment_ref_only(self.data[y], self.data[x],
+                                                                   interp_reference,
+                                                                   sample, reference_sample)
         self.add_data_column("Compensated_Moment_emu", compensated_moment)
 
     def mean_field(self):

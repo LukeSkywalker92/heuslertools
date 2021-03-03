@@ -1,18 +1,18 @@
-import matplotlib as mpl
-import matplotlib.pylab as plt
+import os
+
+import matplotlib.pyplot as plt
 import numpy as np
 from heuslertools.cristallography import Crystal
+from heuslertools.cristallography.mcif_parser import MCIFParser
+from heuslertools.cristallography.mcrystal import MCrystal
 from heuslertools.plotting import plot_functions
 from heuslertools.plotting.mpl_helpers import set_size
 from heuslertools.xrd.materials import CuMnSb
 
 cumnsb = Crystal(CuMnSb)
-cumnsb.atom_properties['Cu']['color'] = 'red'
-cumnsb.atom_properties['Mn']['color'] = 'blue'
-cumnsb.atom_properties['Sb']['color'] = 'green'
-
-
-x, y, z, c, r = cumnsb.get_3D_lattice(1, 1, 1)
+cumnsb.crystal = MCrystal.from_mcif('/home/luke/Coding/python/heuslertools/examples/crystallography/data/mCuMnSb.cif')
+print(cumnsb)
+x, y, z, c, r = cumnsb.get_3D_lattice(2, 2, 2)
 
 
 """
