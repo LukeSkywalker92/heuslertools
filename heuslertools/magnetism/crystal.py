@@ -52,6 +52,9 @@ class Crystal(object):
         """
         return(self.curie_constant/(temperature-self.t_cw))
 
+    def afm_suszeptibility(self, temperature):
+        pass
+
     def get_exp_eff_moment(self, c):
         """
         Calculate the effective paramagnetic moment for a given Curie constant

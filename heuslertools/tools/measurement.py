@@ -71,6 +71,9 @@ class Measurement(object):
         """
         self.data = np.append(self.data, load_data(file, self._identifier, delimiter=self._delimiter, start_row=start_row, end_row=end_row, names=self._names, encoding=self._encoding))
 
+    def append_measurement_from_measurement(self, measurement):
+         self.data = np.append(self.data, measurement.data)
+
     def plot(self, x, y, *args, show=True, label=True, **kwargs):
         """Plot data
 

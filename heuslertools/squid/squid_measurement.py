@@ -18,14 +18,14 @@ class SQUIDMeasurement(Measurement):
     def add_compensated_moment(self, x, y, gap_measurement, reference_measurement, sample, gap_sample, reference_sample):
         interp_gap = gap_measurement.interpolation(x, y)
         interp_reference = reference_measurement.interpolation(x, y)
-        compensated_moment = calculate_compensated_moment(self.data[y], self.data[x],
+        compensated_moment = calculate_compensated_moment(np.array(self.data[y]), np.array(self.data[x]),
                                                           interp_gap, interp_reference,
                                                           sample.beta(gap_sample, reference_sample))
         self.add_data_column("Compensated_Moment_emu", compensated_moment)
 
     def add_compensated_moment_ref_only(self, x, y, reference_measurement, sample, reference_sample):
         interp_reference = reference_measurement.interpolation(x, y)
-        compensated_moment = calculate_compensated_moment_ref_only(self.data[y], self.data[x],
+        compensated_moment = calculate_compensated_moment_ref_only(np.array(self.data[y]), np.array(self.data[x]),
                                                                    interp_reference,
                                                                    sample, reference_sample)
         self.add_data_column("Compensated_Moment_emu", compensated_moment)
