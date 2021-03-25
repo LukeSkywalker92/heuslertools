@@ -1,5 +1,5 @@
 import numpy as np
-import sympy
+#import sympy
 import mpmath
 from heuslertools.magnetism.si_constants import g, MU_BOHR, K_B
 
