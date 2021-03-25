@@ -2,6 +2,7 @@ import numpy as np
 from operator import sub
 from scipy.interpolate import interp1d
 from scipy.signal import savgol_filter
+import matplotlib.pyplot as plt
 
 LABEL_POSITIONS = {
     'top': -1,
@@ -63,5 +64,15 @@ def arrows(ax, x, y, n_arrows, offset=0, color='black', size=20, window_length=2
         ax.annotate("", xytext=(X,Y),xy=(X+0.001*dX,Y+0.001*dY), 
                     arrowprops=dict(arrowstyle="->", color=color), size = size)
 
-def label_lines(ax):
-    pass
+def label_lines(ax=None, data_point=-1, position='right', x_margin=0, y_margin=0, horizontalalignment='auto', **kwargs):
+    if horizontalalignment == 'auto':
+        if position == 'left':
+            ha = 'right'
+        elif position == 'right':
+            ha = 'left'
+    else:
+        ha = horizontalalignment
+    if ax == None:
+        ax = plt.gca()
+    for line in ax.lines:
+        ax.text(line.get_xdata(orig=False)[data_point]+x_margin, line.get_ydata(orig=False)[data_point]+y_margin, line._label, horizontalalignment=ha, verticalalignment='center', **kwargs)

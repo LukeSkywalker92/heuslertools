@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from heuslertools.plotting.plot_functions import label_lines
 
 def get_label_for_line(line):
     leg = line.axes.get_legend()
@@ -14,8 +15,5 @@ for i in range(5):
     line = plt.plot(x, y+(i*10), label=f'Curve {str(i+1)}')
 #plt.legend()
 ax.set_xlim(0, 14)
-for line in ax.lines:
-    print(line._label)
-    print(line.get_xdata()[-1], line.get_ydata()[-1])
-    ax.text(line.get_xdata()[-1]+0.5, line.get_ydata()[-1], line._label, horizontalalignment='left', verticalalignment='center')
+label_lines(x_margin=0.5)
 plt.show()
