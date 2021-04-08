@@ -9,5 +9,5 @@ class TransportMeasurement(Measurement):
     ```from heuslertools.transport import TransportMeasurement```
     """
 
-    def __init__(self, file, identifier, **kwargs):
+    def __init__(self, file, identifier='---------', **kwargs):
         super().__init__(file, identifier, delimiter='\t', **kwargs)
