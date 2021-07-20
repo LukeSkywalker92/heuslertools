@@ -169,7 +169,7 @@ class Measurement(object):
         print("Availiable names:")
         print(tabulate(table, headers))
 
-    def substract_linear_baseline(self, x, y, x_min, x_max, mean=False):
+    def substract_linear_baseline(self, x, y, x_min, x_max, mean=False, symmetric_zero=False):
         """Substract linear baseline from x-y-data and add substracted data
         column to data.
 
@@ -191,7 +191,11 @@ class Measurement(object):
         data_name = "_".join(data_name)
         indices = np.where(np.logical_and(self.data[x] >= x_min, self.data[x] <= x_max))
         fit = np.poly1d(np.polyfit(self.data[x][indices], self.data[y][indices], 1))
-        data = self.data[y]-fit(self.data[x])
+        print(fit[1])
+        if symmetric_zero:
+            data = self.data[y] - (self.data[x]*fit[1])
+        else:
+            data = self.data[y]-fit(self.data[x])
         if mean:
             data = data - np.mean(data)
         self.add_data_column(data_name, data)
