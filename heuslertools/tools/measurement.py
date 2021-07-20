@@ -191,7 +191,6 @@ class Measurement(object):
         data_name = "_".join(data_name)
         indices = np.where(np.logical_and(self.data[x] >= x_min, self.data[x] <= x_max))
         fit = np.poly1d(np.polyfit(self.data[x][indices], self.data[y][indices], 1))
-        print(fit[1])
         if symmetric_zero:
             data = self.data[y] - (self.data[x]*fit[1])
         else:
