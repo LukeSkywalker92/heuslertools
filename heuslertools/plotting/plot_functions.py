@@ -18,7 +18,7 @@ def get_aspect(ax):
     axes_ratio = height / width
     return axes_ratio
 
-def sub_label(ax, label, position, style=None, color='k', x_factor=1, y_factor=1):
+def sub_label(ax, label, position, style=None, color='k', x_factor=1, y_factor=1, **kwargs):
     vertical, horizontal = position.split('_')
     aspect = get_aspect(ax)
     label_string = r''
@@ -31,7 +31,7 @@ def sub_label(ax, label, position, style=None, color='k', x_factor=1, y_factor=1
             abs(LABEL_POSITIONS[vertical]+(0.03*(1/aspect)*y_factor)),
             label_string,
             horizontalalignment=horizontal, verticalalignment=vertical,
-            transform=ax.transAxes, color=color)
+            transform=ax.transAxes, color=color, **kwargs)
 
 def arrows(ax, x, y, n_arrows, offset=0, color='black', size=20, window_length=211, polyorder=3, plot_interpolation=False):
     x0 = min(x)
