@@ -266,12 +266,12 @@ def rasterize_and_save(fname, rasterize_list=None, fig=None, dpi=None,
 
         # Convert to rasterized mode and then change zorder properties
         if is_contour:
-            curr_ax = item.ax.axes
-            curr_ax.set_rasterization_zorder(zorder)
+            curr_ax = item.axes
+            #curr_ax.set_rasterization_zorder(zorder)
             # For contour plots, need to set each part of the contour
             # collection individually
             for contour_level in item.collections:
-                contour_level.set_zorder(zorder - 1)
+                #contour_level.set_zorder(zorder - 1)
                 contour_level.set_rasterized(True)
         elif is_patch_list:
             # For list of patches, need to set zorder for each patch
