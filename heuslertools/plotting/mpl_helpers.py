@@ -294,3 +294,8 @@ def rasterize_and_save(fname, rasterize_list=None, fig=None, dpi=None,
 
     # Save resulting figure
     fig.savefig(fname, **savefig_kw)
+
+def tick_right(ax):
+    ax.yaxis.set_label_position('right')
+    ax.yaxis.tick_right()
+    ax.yaxis.set_ticks_position('both')
