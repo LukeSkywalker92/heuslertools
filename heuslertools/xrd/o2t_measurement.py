@@ -28,7 +28,7 @@ class O2TMeasurement(XRDMeasurement):
         """
         self.layerstack = layerstack
 
-    def simulate_o2t(self, H, K, L, bounds=[], monochromator=xu.materials.Ge.planeDistance(2, 2, 0), polarization='both', I0=1000000000, offset=0.0):
+    def simulate_o2t(self, H, K, L, bounds=[], monochromator=xu.materials.Ge.planeDistance(2, 2, 0), polarization='both', I0=1000000000, offset=0.0, x_values=None):
         """Short summary.
 
         Parameters
@@ -78,5 +78,7 @@ class O2TMeasurement(XRDMeasurement):
         paramsdyn = fitmdyn.make_params()
         fitmdyn.lmodel.set_hkl((H, K, L))
         fitr = fitmdyn.fit(self.data['detector'], paramsdyn, ai)
-        simdyn = fitmdyn.eval(fitr.params, x=tt/2)
+        if x_values is None:
+            x_values = tt/2
+        simdyn = fitmdyn.eval(fitr.params, x=x_values)
         return simdyn, fitr
